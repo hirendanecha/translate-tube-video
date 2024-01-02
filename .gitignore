@@ -2,7 +2,7 @@
 
 # Compiled output
 /dist
-/dist-video
+/tube-dist
 /tmp
 /out-tsc
 /bazel-out
