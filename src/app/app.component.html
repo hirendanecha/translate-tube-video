@@ -1,0 +1,28 @@
+<router-outlet></router-outlet>
+
+<ng-container *ngIf="isShowScrollTopBtn">
+  <div class="scroll-to-top rounded" role="button" (click)="shareService.scrollToTop()">
+    <fa-icon [icon]="['fas', 'angles-up']" [fixedWidth]="true" />
+  </div>
+</ng-container>
+<!-- <ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.5)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
+</ngx-spinner> -->
+<ngx-spinner
+  [type]="'line-scale'"
+  bdColor="rgba(0, 0, 0, 0.5)"
+  size="medium"
+  color="#fff"
+  [fullScreen]="true"
+  >
+  <img src="/assets/default-profile.jpg" alt="" class="spinner-wrapper" />
+</ngx-spinner>
+
+<app-toast-modal aria-live="polite" aria-atomic="true"></app-toast-modal>
+

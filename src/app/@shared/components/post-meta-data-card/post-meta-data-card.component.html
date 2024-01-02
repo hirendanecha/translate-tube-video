@@ -1,0 +1,23 @@
+<a
+  class="post-description mdtxt pt-0 pb-1 text-start"
+  [href]="post.metalink"
+  target="_blank"
+  *ngIf="post?.metalink"
+  >{{ post.metalink }}</a
+>
+
+<div class="border rounded-3 mb-3 w-400-px" *ngIf="post?.metaimage">
+  <a [href]="post.metalink" target="_blank" class="post-img w-100">
+    <img
+      loading="lazy"
+      data-src="{{ post?.metaimage }}"
+      class="w-100 h-100 rounded-0"
+      alt="image"
+      onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-room.png';"
+    />
+    <p class="post-description text-start m-2">{{ post?.title }}</p>
+    <p class="post-description text-start m-2">
+      {{ post?.metadescription }}
+    </p>
+  </a>
+</div>

@@ -1,0 +1,38 @@
+<ng-container *ngIf="channelList.length">
+<div class="row">
+  <div class="col-xl-3 col-sm-6 mb-3" *ngFor="let channel of channelList">
+    <div class="channels-card">
+      <div class="channels-card-image">
+        <a
+          ><img
+            class="img-fluid"
+            [src]="channel?.profile_pic_name"
+            alt=""
+            onerror="this.onerror=null;this.src='assets/default-profile.jpg';"
+        /></a>
+        <!-- <div class="channels-card-image-btn">
+          <button type="button" class="btn btn-outline-danger btn-sm">
+            Subscribe <strong>{{ channel.subscriptionCount }}</strong>
+          </button>
+        </div> -->
+      </div>
+      <div
+        class="channels-card-body cursor"
+        (click)="openChannelDetailPage(channel)"
+      >
+        <div class="channels-title">
+          <a>{{ channel.unique_link }}</a>
+        </div>
+        <div class="channels-view font-16-px">
+          {{ channel.firstname }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</ng-container>
+<ng-container *ngIf="!channelList.length">
+  <div class="col-12 text-center">
+    <h6>No data available</h6>
+  </div>
+</ng-container>

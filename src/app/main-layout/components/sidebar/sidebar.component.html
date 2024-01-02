@@ -1,0 +1,73 @@
+<ng-container *ngIf="shareService.getCredentials()">
+  <ul
+    class="sidebar navbar-nav"
+    [ngClass]="{
+      toggled:
+        !shareService.isSidebarOpen &&
+        (breakpointService?.screen | async)?.md?.gatherThen
+    }"
+  >
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="/home">
+        <fa-icon [icon]="['fas', 'home']" [fixedWidth]="true" />
+        <span>Home</span>
+      </a>
+    </li>
+    <li
+      class="nav-item"
+      routerLinkActive="active"
+      *ngIf="isUserMediaApproved()"
+    >
+      <a class="nav-link" routerLink="/channels">
+        <fa-icon [icon]="['fas', 'user']" [fixedWidth]="true" />
+        <span>My Channel</span>
+      </a>
+    </li>
+
+    <!-- <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="/history-page">
+      <fa-icon [icon]="['fas', 'history']" [fixedWidth]="true" />
+      <span>History Page</span>
+      </a>
+   </li> -->
+
+    <li
+      class="nav-item"
+      routerLinkActive="active"
+      *ngIf="isUserMediaApproved()"
+    >
+      <a class="nav-link" routerLink="/upload/details">
+        <fa-icon [icon]="['fas', 'cloud-upload']" [fixedWidth]="true" />
+        <span>Upload Details</span>
+      </a>
+    </li>
+
+    <li class="nav-item channel-sidebar-list">
+      <h6>Featured Channels</h6>
+      <ul>
+        <li *ngFor="let channel of featuredChannels">
+          <div (click)="navigateToChannel(channel)">
+            <a
+              [routerLink]="'channel/' + channel?.unique_link"
+              [state]="{ data: channel }"
+            >
+              <img
+                class="img-fluid"
+                [src]="channel.profile_pic_name"
+                alt=""
+                onerror="this.onerror=null;this.src='assets/default-profile.jpg';"
+              />
+              {{ channel.firstname }}
+            </a>
+          </div>
+          <!-- <div (click)="navigateToChannel(channel)">
+            <img class="img-fluid" [src]="channel.profile_pic_name" alt=""
+            onerror="this.onerror=null;this.src='assets/default-profile.jpg';"
+            >
+            {{ channel.firstname }}
+          </div> -->
+        </li>
+      </ul>
+    </li>
+  </ul>
+</ng-container>

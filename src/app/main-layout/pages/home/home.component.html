@@ -1,0 +1,106 @@
+<div class="video-block section-padding">
+  <div class="row">
+    <div class="col-md-12">
+      <app-lf-dashboard (searchTextEmitter)="onSearchData($event)" />
+    </div>
+    <ng-container *ngIf="searchResults === 0">
+      <h2 class="text-center">No search result found</h2>
+    </ng-container>
+    <ng-container *ngIf="channelData?.firstname && !searchResults">
+      <div class="main-title d-flex font-24-px icon-color">
+        <fa-icon [icon]="['fas', 'play-circle']" class="me-2" />
+        <h6>{{ channelData.firstname }}</h6>
+      </div>
+      <app-video-card [videoData]="videoList" />
+      <div
+        class="d-flex justify-content-center mb-2"
+        *ngIf="!hasMoreData && videoList.length"
+      >
+        <button class="btn btn-outline-primary" (click)="loadMore()">
+          Load More
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<ng-container *ngIf="!searchResults">
+  <div class="video-block section-padding">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main-title d-flex font-24-px icon-color">
+          <fa-icon [icon]="['fas', 'play-circle']" class="me-2" />
+          <h6>Featured Videos</h6>
+        </div>
+      </div>
+      <app-video-card [videoData]="recommendedVideoList" />
+      <div
+        class="d-flex justify-content-center mb-2"
+        *ngIf="!hasRecommendedData && recommendedVideoList.length"
+      >
+        <button class="btn btn-outline-primary" (click)="recommendedLoadMore()">
+          Load More
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- <hr class="mt-0"> -->
+<!-- <div class="video-block section-padding">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="main-title">
+        <h6>Popular Channels</h6>
+      </div>
+    </div>
+
+    <app-channels-card  />
+
+  </div>
+</div> -->
+
+<ng-container *ngIf="searchResults">
+  <div class="search-container">
+    <div class="c-box mb-3 single-video-comment-tabs">
+      <div class="d-flex justify-content-between">
+        <div class="mb-5">
+          <h6>About {{ searchResults }} results</h6>
+          <h4>Search result for {{ activeTab }}</h4>
+        </div>
+        <fa-icon
+        [icon]="['fas', 'xmark']"
+        class="font-24-px"
+        role="button"
+        title="close"
+        (click)="clearSearchData()"
+      />
+      </div>
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item cursor">
+          <a
+            class="nav-link"
+            [class.active]="activeTab === 'Channels'"
+            (click)="switchTab('Channels')"
+            >Channels</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link cursor"
+            [class.active]="activeTab === 'Videos'"
+            (click)="switchTab('Videos')"
+            >Videos</a
+          >
+        </li>
+      </ul>
+      <app-channels-card
+        *ngIf="activeTab === 'Channels'"
+        [channelList]="searchChannelData"
+      />
+      <app-video-card
+        *ngIf="activeTab === 'Videos'"
+        [videoData]="searchPostData"
+      />
+    </div>
+  </div>
+</ng-container>

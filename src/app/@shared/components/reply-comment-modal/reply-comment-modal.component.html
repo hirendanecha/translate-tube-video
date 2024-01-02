@@ -1,0 +1,93 @@
+<div class="modal-header">
+  <h6 class="text-start m-0">{{ title }}</h6>
+
+  <fa-icon
+    [icon]="['fas', 'xmark']"
+    class="font-20-px"
+    role="button"
+    (click)="activeModal.close()"
+  />
+</div>
+
+<div class="modal-body text-start">
+  <!-- <span>{{ message }}</span> -->
+  <div class="d-flex align-items-center">
+    <div class="d-center align-items-baseline">
+      <img
+        loading="lazy"
+        class="w-40-px h-40-px rounded-3"
+        data-src="{{ data?.ProfilePicName }}"
+        onerror="this.onerror=null;this.src='assets/default-profile.jpg';"
+        alt="avatar"
+      />
+    </div>
+    <div class="input-area py-2 px-3 gap-2 align-items-center w-100 ms-2">
+      <ng-container *ngIf="commentData?.imageUrl">
+        <div class="position-relative w-52-px h-52-px mb-2">
+          <img
+            loading="lazy"
+            data-src="{{ commentData?.imageUrl }}"
+            class="w-100 h-100 rounded-4"
+            alt="icon"
+          />
+          <fa-icon
+            [icon]="['fas', 'xmark']"
+            class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer text-white"
+            (click)="removePostSelectedFile()"
+          />
+        </div>
+      </ng-container>
+
+      <div class="d-flex">
+        <!-- <input
+          placeholder="Reply..."
+          class="outline-0 w-100 file-input comment-input comment-input c-text"
+          [(ngModel)]="commentData.comment"
+        /> -->
+        <app-tag-user-input
+          placeholder="Write something to comment.."
+          [value]="commentMessageInputValue"
+          (onDataChange)="onTagUserInputChangeEvent($event)"
+        />
+        <div class="file-input d-flex gap-1 gap-md-2">
+          <div class="file-upload d-flex">
+            <!-- <label class="file">
+              <input
+                type="file"
+                accept="image/*"
+                (change)="onPostFileSelect($event)"
+              />
+              <span
+                class="file-custom border-0 d-grid text-center"
+                role="button"
+              >
+                <fa-icon
+                  [icon]="['fas', 'image']"
+                  class="m-0 font-20-px text-primary"
+                />
+              </span>
+            </label> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer justify-content-end gap-2">
+  <button
+    type="button"
+    class="btn btn-sm btn-secondary"
+    (click)="activeModal.close('cancel')"
+  >
+    {{ cancelButtonLabel }}
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-sm btn-danger"
+    (click)="activeModal.close(commentData)"
+  >
+    {{ confirmButtonLabel }}
+  </button>
+</div>

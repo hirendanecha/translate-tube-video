@@ -1,0 +1,51 @@
+<ng-container *ngFor="let video of videoList">
+  <div
+    class="video-card video-card-list cursor"
+    (click)="openDetailPage(video)"
+  >
+    <div class="video-card-image">
+      <a class="play-icon">
+        <fa-icon [icon]="['fas', 'play-circle']" />
+      </a>
+      <a
+        ><img
+          class="img-fluid h-100"
+          loading="lazy"
+          data-src="{{ video?.thumbfilename }}"
+          alt=""
+          onerror="this.onerror=null;this.src='/assets/dummy/11.jpg';"
+      /></a>
+      <div class="time">
+        <fa-icon [icon]="['fas', 'clock']" [fixedWidth]="true" />
+        {{ +video.videoduration | timeDurationWithSec }}
+      </div>
+    </div>
+    <div class="video-card-body">
+      <div class="video-title text-dark">
+        <div
+          [ngbTooltip]="video.albumname"
+          placement="bottom"
+          class="video-page font-16-px"
+        >
+          {{ video.albumname }}
+        </div>
+      </div>
+      <div class="c-description-height video-description">
+        <a
+          [title]="stripTags(video.postdescription)"
+          placement="bottom"
+          >{{stripTags(video.postdescription)}}</a>
+          <!-- [innerHTML]="video.postdescription | noSanitize" -->
+        </div>
+      <div class="video-page text-dark c-height">
+        {{ video.firstname }}
+      </div>
+      <div class="video-view">
+        <!-- <fa-icon [icon]="['fas', 'eye']" [fixedWidth]="true" />
+        {{ video.viewcount }} views &nbsp; -->
+        <fa-icon [icon]="['fas', 'calendar']" [fixedWidth]="true" />
+        {{ video.postcreationdate | date | dateDay }}
+      </div>
+    </div>
+  </div>
+</ng-container>

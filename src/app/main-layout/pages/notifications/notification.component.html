@@ -1,0 +1,82 @@
+<div class="head-area mb-5 text-start">
+  <h5>Notifications</h5>
+</div>
+<div class="single-box">
+  <ng-container *ngIf="notificationList.length > 0">
+    <ng-container *ngFor="let notification of notificationList">
+      <div
+        class="notification-single d-flex d-center p-4 justify-content-between"
+      >
+        <div class="d-flex top-review-wrapper gap-3 align-items-center">
+          <div class="avatar-item">
+            <img
+              class="avatar-img w-48-px h-48-px rounded-3"
+              loading="lazy"
+              data-src="{{
+                notification?.ProfilePicName || '/assets/images/avtar/placeholder-user.png'
+              }}"
+              onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+              alt="avatar"
+            />
+          </div>
+          <div class="single-item notification-area text-area text-start">
+            <h6 class="m-0 mb-1">
+              <!-- <a class="cursor c-font" (click)="viewUserPost(notification.postId)">{{
+                notification?.Username
+              }}</a> -->
+              <a class="cursor c-font" [href]="'https://translate.tube/post/' + notification.postId" target="_blank">{{
+                notification?.Username
+              }}</a>
+              <span class="ms-1">{{ notification?.notificationDesc }} </span>
+              <span
+                *ngIf="notification.isRead === 'N'"
+                class="unread-notification smtxt"
+              ></span>
+            </h6>
+            <span class="mdtxt time-schedule">{{ notification.createDate | dateDay }}</span>
+          </div>
+        </div>
+        <div class="btn-group cus-dropdown d-flex gap-3">
+          <div ngbDropdown class="d-inline-block">
+            <button class="dropdown-btn" ngbDropdownToggle>
+              <fa-icon [icon]="['fas', 'ellipsis']" class="font-24-px" />
+            </button>
+            <div ngbDropdownMenu class="dropdown-menu">
+              <button ngbDropdownItem *ngIf="notification.isRead === 'N'">
+                <a
+                  class="droplist d-flex align-items-center gap-2"
+                  (click)="readUnreadNotification(notification.id, 'Y')"
+                >
+                  <fa-icon [icon]="['fas', 'square-check']" />
+                  <span>Mark as read</span>
+                </a>
+              </button>
+              <button ngbDropdownItem *ngIf="notification.isRead === 'Y'">
+                <a
+                  class="droplist d-flex align-items-center gap-2"
+                  (click)="readUnreadNotification(notification.id, 'N')"
+                >
+                  <fa-icon [icon]="['fas', 'square-xmark']" />
+                  <span>Mark as unread</span>
+                </a>
+              </button>
+              <button ngbDropdownItem>
+                <a
+                  class="droplist d-flex align-items-center gap-2"
+                  (click)="removeNotification(notification.id)"
+                >
+                  <fa-icon [icon]="['fas', 'trash-can']" />
+                  <span>Delete</span>
+                </a>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="notificationList.length === 0">
+    <span> No notifications!</span>
+  </ng-container>
+</div>

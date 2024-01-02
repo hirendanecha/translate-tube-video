@@ -1,0 +1,60 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .tag-input-div {
+    font-size: 16px;
+    min-height: 56px;
+    line-break: anywhere;
+    text-align: start;
+
+    &[placeholder]:empty {
+      &:before {
+        content: attr(placeholder);
+        color: #697495;
+      }
+      &:focus {
+        &:before {
+          content: "";
+        }
+      }
+    }
+  }
+  .user-dropdown-menu {
+    max-height: 300px;
+  }
+}
+
+::ng-deep {
+  .tag-input-div {
+    div,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    a,
+    span,
+    p {
+      background: unset !important;
+      background-color: unset !important;
+      font-size: 16px !important;
+      line-height: unset !important;
+      color: var(--para-2nd-color);
+    }
+    // br {
+    //   display: none;
+    // }
+  }
+
+  mention-list {
+    .mention-menu {
+      width: 340px;
+      .mention-item {
+        padding: 8px;
+      }
+    }
+  }
+}

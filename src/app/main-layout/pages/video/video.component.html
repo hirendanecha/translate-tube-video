@@ -1,0 +1,550 @@
+<div class="video-block-right-list section-padding">
+  <div class="row mb-4">
+    <div class="col-md-9">
+      <div
+        class="d-xl-flex column-gap-2 column-gap-xxl-4 col-12 col-md-12 col-lg-8 m-auto px-4 mb-4 justify-content-center mb-view-left-txt c-searchbar"
+      >
+        <div
+          class="form-inline osahan-navbar-search"
+          *ngIf="sharedService.getCredentials()"
+        >
+          <div class="input-group form-control c-input-border">
+            <fa-icon [icon]="['fas', 'magnifying-glass']" class="m-1" />
+            <input
+              type="text"
+              [(ngModel)]="searchText"
+              autocomplete="off"
+              (keyup)="getSearchData()"
+              placeholder="Search for..."
+            />
+          </div>
+          <ng-container *ngIf="searchText && userSearchList.length">
+            <div class="col-10 pt-1 m-auto">
+              <div #userSearchDropdownRef ngbDropdown class="c-search-dropdown">
+                <div ngbDropdownMenu class="search-user-list w-100">
+                  <ng-container *ngFor="let user of userSearchList">
+                    <div
+                      ngbDropdownItem
+                      class="d-flex gap-3 pe-auto"
+                      role="button"
+                      (click)="openProfile(user.unique_link)"
+                    >
+                      <img
+                        loading="lazy"
+                        class="w-32-px h-32-px rounded"
+                        data-src="{{ user.profile_pic_name }}"
+                        [alt]="user.firstname"
+                        onerror="this.onerror=null;this.src='assets/default-profile.jpg';"
+                      />
+                      <span>{{ user?.firstname }}</span>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="single-video">
+        <!-- <div [id]="'video-' + videoDetails?.id" class="w-100 c-height"></div> -->
+        <!-- autoplay="autoplay" -->
+        <!-- <video
+          id="playerVideo"
+          class="w-100"
+          controls
+          src="{{ videoDetails?.streamname }}"
+        ></video> -->
+        <div
+          [id]="'jwVideo-' + videoDetails?.id"
+          class="w-100 c-height"
+          loading="lazy"
+        ></div>
+      </div>
+      <div class="video-block section-padding">
+        <div class="single-video-left">
+          <div class="single-video-title box mb-3">
+            <div class="d-flex justify-content-between">
+              <div class="d-flex flex-column">
+                <h2>
+                  <a>{{ videoDetails?.albumname }}</a>
+                </h2>
+                <p class="mb-0">
+                  Uploaded
+                  <fa-icon [icon]="['fas', 'calendar']" [fixedWidth]="true" />
+                  {{ videoDetails?.postcreationdate | dateDay }}
+                </p>
+                <!-- <p class="mb-0">
+                  <fa-icon [icon]="['fas', 'eye']" [fixedWidth]="true" />
+                  {{ videoDetails?.viewcount }} views
+                </p> -->
+              </div>
+              <div
+                class="d-flex align-items-center cursor"
+                ngbTooltip="Coming Soon!"
+                placement="bottom"
+              >
+                <span class="me-1 font-20-px">Share</span>
+                <fa-icon [icon]="['fas', 'share-alt']" [fixedWidth]="true" />
+              </div>
+            </div>
+          </div>
+          <div
+            class="single-video-author box mb-3"
+            *ngIf="videoDetails?.unique_link"
+          >
+            <img
+              class="img-fluid"
+              loading="lazy"
+              data-src="{{ videoDetails?.profile_pic_name }}"
+              onerror="this.onerror=null;this.src='assets/default-profile.jpg';"
+              alt=""
+            />
+            <p class="d-flex align-items-center">
+              <a
+                ><strong class="header-text me-2">{{
+                  videoDetails.firstname
+                }}</strong></a
+              >
+              <span
+                title=""
+                data-placement="top"
+                data-toggle="tooltip"
+                data-original-title="Verified"
+              >
+                <fa-icon [icon]="['fas', 'check-circle']" [fixedWidth]="true" />
+              </span>
+            </p>
+            <small
+              >Published on
+              {{ videoDetails?.created | date : "MMM dd,yyyy" }}</small
+            >
+          </div>
+          <div class="single-video-info-content box mb-3">
+            <!-- <h6>Cast:</h6>
+            <p>Nathan Drake , Victor Sullivan , Sam Drake , Elena Fisher</p>
+            <h6>Category :</h6>
+            <p>Gaming , PS4 Exclusive , Gameplay , 1080p</p> -->
+            <h6>Video Description:</h6>
+            <div class="video-description">
+              <p 
+                class="sub-text  c-width "
+                >{{stripTags(videoDetails?.postdescription)}}</p>
+                <!-- [innerHTML]="videoDetails?.postdescription | noSanitize" -->
+            </div>
+          </div>
+
+          <!-- Comments Section -->
+          <div class="box mb-3 single-video-comment-tabs">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="retro-comments-tab"
+                  >video Comments</a
+                >
+                <!-- (click)="viewComments(videoDetails.id)" -->
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div
+                class="tab-pane fade show active"
+                id="retro-comments"
+                role="tabpanel"
+                aria-labelledby="retro-comments-tab"
+              >
+                <div class="reviews-members pt-0">
+                  <div class="media" *ngIf="sharedService.getCredentials()">
+                    <a
+                      ><img
+                        class="me-3"
+                        loading="lazy"
+                        data-src="{{
+                          authService?.userDetails?.ProfilePicName
+                        }}"
+                        onerror="this.onerror=null;this.src='/assets/dummy/11.jpg';"
+                        alt="icon"
+                    /></a>
+
+                    <div class="media-body gap-2 align-items-center">
+                      <ng-container *ngIf="isParent && commentData?.imageUrl">
+                        <div class="position-relative w-52-px h-52-px mb-2">
+                          <img
+                            loading="lazy"
+                            data-src=""
+                            class="w-100 h-100 rounded-4"
+                            data-src="{{ commentData?.imageUrl }}"
+                            onerror="this.onerror=null;this.src='/assets/dummy/11.jpg';"
+                            alt="icon"
+                          />
+                          <fa-icon
+                            [icon]="['fas', 'xmark']"
+                            class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer text-white"
+                            (click)="removePostSelectedFile()"
+                          />
+                        </div>
+                      </ng-container>
+                      <div class="d-flex align-items-center form-members-body">
+                        <!-- <div
+                          #parentPostCommentElement
+                          contenteditable
+                          placeholder="Add a comment..."
+                          class="w-100 comment-input c-text"
+                        ></div> -->
+                        <app-tag-user-input
+                          placeholder=""
+                          [value]="commentMessageInputValue"
+                          [isShowMetaPreview]="true"
+                          (onDataChange)="onTagUserInputChangeEvent($event)"
+                        />
+                        <!-- <label class="file">
+                          <input
+                            type="file"
+                            class="d-none"
+                            accept="image/*"
+                            #uploadVideo
+                            (change)="onPostFileSelect($event, 'parent')"
+                          />
+                          <span
+                            class="file-custom border-0 d-grid text-center"
+                            role="button"
+                          >
+                            <fa-icon
+                              [icon]="['fas', 'image']"
+                              class="font-20-px text-primary"
+                            />
+                          </span>
+                        </label> -->
+                        <span
+                          class="file-input mx-2 mx-sm-3 gap-1 gap-md-2 cursor"
+                        >
+                          <fa-icon
+                            [icon]="['fas', 'paper-plane']"
+                            class="font-20-px text-primary"
+                            role="button"
+                            (click)="commentOnPost(videoDetails.id)"
+                          />
+                        </span>
+                      </div>
+                      <div class="form-members-footer mt-2">
+                        <!-- <b class="float-left">12,725 Comments</b> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- usercomments -->
+                <ng-container *ngFor="let comment of commentList">
+                  <div class="reviews-members">
+                    <ng-container
+                      *ngIf="
+                        profileId === comment?.profileId &&
+                        sharedService.getCredentials()
+                      "
+                    >
+                      <div class="float-end">
+                        <div ngbDropdown class="c-dropdown">
+                          <fa-icon
+                            [icon]="['fas', 'ellipsis']"
+                            class="font-20-px m-0"
+                            role="button"
+                            ngbDropdownToggle
+                          />
+
+                          <div ngbDropdownMenu class="dropdown-menu">
+                            <button ngbDropdownItem>
+                              <a
+                                class="droplist d-flex align-items-center gap-2"
+                                (click)="editComment(comment)"
+                              >
+                                <fa-icon [icon]="['fas', 'pen-to-square']" />
+                                <span>Edit</span>
+                              </a>
+                            </button>
+                            <button ngbDropdownItem>
+                              <a
+                                class="droplist d-flex align-items-center gap-2"
+                                (click)="deleteComments(comment)"
+                              >
+                                <fa-icon [icon]="['fas', 'trash-can']" />
+                                <span>Delete</span>
+                              </a>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                    <div class="media">
+                      <a
+                        ><img
+                          class="me-3"
+                          data-src="{{ comment?.ProfilePicName }}"
+                          onerror="this.onerror=null;this.src='assets/default-profile.jpg';"
+                          alt="icon"
+                      /></a>
+                      <div class="media-body">
+                        <div class="reviews-members-header">
+                          <h6 class="mb-1">
+                            <a class="text-black">{{ comment?.Username }} </a>
+                            <!-- <small class="text-gray">2 months ago</small> -->
+                          </h6>
+                        </div>
+                        <ng-container *ngIf="comment?.comment">
+                          <p
+                            class="reviews-members-body"
+                            [innerHTML]="comment?.comment | noSanitize"
+                          ></p>
+                        </ng-container>
+                        <app-post-meta-data-card [post]="comment" />
+                        <div
+                          class="reviews-members-footer d-flex align-items-center"
+                        >
+                          <button
+                            class="total-like me-2 cursor"
+                            (click)="
+                              comment.react == 'L'
+                                ? disLikeComments(comment)
+                                : likeComments(comment)
+                            "
+                            [disabled]="!sharedService.getCredentials()"
+                          >
+                            <fa-icon
+                              [icon]="['fas', 'thumbs-up']"
+                              [fixedWidth]="true"
+                            />
+                            {{
+                              comment?.likeCount > 0 ? comment?.likeCount : 0
+                            }}&nbsp;Likes
+                          </button>
+                          <button
+                            class="total-like cursor"
+                            [disabled]="!sharedService.getCredentials()"
+                            (click)="showReplySection(comment?.id)"
+                          >
+                            <fa-icon
+                              [icon]="['fas', 'message']"
+                              [fixedWidth]="true"
+                              type="button"
+                            />
+                            Reply
+                          </button>
+                          <!-- <a
+                            *ngIf="comment?.replyCommnetsList?.length"
+                            class="ms-3 cursor"
+                            (click)="showReplyedComments(comment?.id)"
+                            >See reply
+                          </a> -->
+                        </div>
+                        <!-- replay comment -->
+                        <ng-container
+                          *ngIf="
+                            isReply &&
+                            videoDetails.id === comment?.postId &&
+                            commentId === comment?.id
+                          "
+                        >
+                          <div
+                            class="media-body ps-5 gap-2 align-items-center pt-4"
+                          >
+                            <div
+                              class="d-flex align-items-center form-members-body"
+                            >
+                              <!-- <div
+                                #childPostCommentElement
+                                contenteditable
+                                placeholder="Add a comment..."
+                                class="w-100 comment-input c-text"
+                              ></div> -->
+                              <app-tag-user-input
+                                placeholder="Write something to reply.."
+                                [value]="commentMessageInputValue"
+                                (onDataChange)="
+                                  onTagUserInputChangeEvent($event)
+                                "
+                              />
+                              <span
+                                class="file-input mx-2 mx-sm-3 gap-1 gap-md-2 cursor"
+                              >
+                                <fa-icon
+                                  [icon]="['fas', 'paper-plane']"
+                                  class="font-20-px text-primary"
+                                  role="button"
+                                  (click)="
+                                    commentOnPost(videoDetails.id, comment.id)
+                                  "
+                                />
+                              </span>
+                            </div>
+                            <div class="form-members-footer mt-2"></div>
+                          </div>
+                        </ng-container>
+                        <!-- sub comments -->
+                        <!-- *ngIf="isReplyComments && commentId === comment.id" -->
+                        <ng-container>
+                          <ng-container
+                            *ngFor="let reply of comment?.replyCommnetsList"
+                          >
+                            <div class="ms-5">
+                              <div class="d-flex mx-sm-5 mt-2 mt-sm-4 top-area">
+                                <a
+                                  ><img
+                                    class="me-3"
+                                    loading="lazy"
+                                    data-src="{{ reply?.ProfilePicName }}"
+                                    onerror="this.onerror=null;this.src='assets/default-profile.jpg';"
+                                    alt="icon"
+                                /></a>
+                                <div class="media-body">
+                                  <ng-container
+                                    *ngIf="
+                                      profileId === reply.profileId &&
+                                      sharedService.getCredentials()
+                                    "
+                                  >
+                                    <div class="float-end">
+                                      <div ngbDropdown class="c-dropdown">
+                                        <fa-icon
+                                          [icon]="['fas', 'ellipsis']"
+                                          class="font-20-px m-0"
+                                          role="button"
+                                          ngbDropdownToggle
+                                        />
+
+                                        <div
+                                          ngbDropdownMenu
+                                          class="dropdown-menu"
+                                        >
+                                          <button ngbDropdownItem>
+                                            <a
+                                              class="droplist d-flex align-items-center gap-2"
+                                              (click)="editComment(reply)"
+                                            >
+                                              <fa-icon
+                                                [icon]="[
+                                                  'fas',
+                                                  'pen-to-square'
+                                                ]"
+                                              />
+                                              <span>Edit</span>
+                                            </a>
+                                          </button>
+                                          <button ngbDropdownItem>
+                                            <a
+                                              class="droplist d-flex align-items-center gap-2"
+                                              (click)="deleteComments(reply)"
+                                            >
+                                              <fa-icon
+                                                [icon]="['fas', 'trash-can']"
+                                              />
+                                              <span>Delete</span>
+                                            </a>
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </ng-container>
+                                  <div class="reviews-members-header">
+                                    <h6 class="mb-1">
+                                      <a class="text-black"
+                                        >{{ reply?.Username }}
+                                      </a>
+                                      <!-- <small class="text-gray">2 months ago</small> -->
+                                    </h6>
+                                  </div>
+                                  <ng-container *ngIf="reply?.comment">
+                                    <p
+                                      class="reviews-members-body"
+                                      [innerHTML]="reply?.comment | noSanitize"
+                                    ></p>
+                                  </ng-container>
+                                  <app-post-meta-data-card [post]="reply" />
+                                  <div class="reviews-members-footer">
+                                    <!-- <a class="total-like" -->
+                                    <button
+                                      class="total-like text-primary cursor"
+                                      [disabled]="
+                                        !sharedService.getCredentials()
+                                      "
+                                      (click)="
+                                        reply.react == 'L'
+                                          ? disLikeComments(reply)
+                                          : likeComments(reply)
+                                      "
+                                    >
+                                      <fa-icon
+                                        [icon]="['fas', 'thumbs-up']"
+                                        [fixedWidth]="true"
+                                      />
+                                      {{
+                                        reply?.likeCount > 0
+                                          ? reply?.likeCount
+                                          : 0
+                                      }}&nbsp;Likes
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ng-container>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div
+        class="video-slider-right-list"
+        *ngIf="sharedService?.getCredentials()  else noCredentials"
+      >
+        <app-video-slider-list [videoList]="videoList" />
+        <div
+          class="d-flex flex-column text-center justify-content-center mb-2"
+          *ngIf="!hasMoreData"
+        >
+          <fa-icon
+            [icon]="['fas', 'rotate-right']"
+            [fixedWidth]="true"
+            class="font-28-px cursor"
+            (click)="loadMore()"
+          />
+          load more
+          <!-- <button class="btn btn-outline-primary" (click)="loadMore()">
+            Load More
+          </button> -->
+        </div>
+      </div>
+      <ng-template #noCredentials>
+        <div
+          class="right-sidebar profile-sidebar cus-scrollbar d-flex flex-column w-400-px shadow"
+        >
+          <div class="dashboard-img mb-5 mt-2">
+            <img
+              class="w-100 rounded-3"
+              src="/assets/img/freedom-dashboard.png"
+            />
+            <span class="mt-3 text-start font-16-px">
+              Get paid 1 1776 Token to Post, Reactions, Share and View and Refer
+              family and friends to Freedom!
+            </span>
+          </div>
+          <div class="w-100 d-grid">
+            <a href="https://translate.tube/login">
+              <button class="btn btn-success w-100 mb-2">Login</button>
+            </a>
+            <a href="https://translate.tube/register">
+              <button class="btn btn-primary w-100">Sign up</button>
+            </a>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<!-- <div class="video-block section-padding">
+  <div class="row">
+    <div class="col-md-8"></div>
+  </div>
+</div> -->

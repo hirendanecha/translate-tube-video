@@ -1,0 +1,65 @@
+<!-- <div
+  #tagInputDiv
+  contenteditable
+  [attr.placeholder]="placeholder"
+  class="tag-input-div input-area c-text form-control"
+  (keyup)="messageOnKeyEvent()"
+></div> -->
+
+<!-- <div #userSearchDropdownRef ngbDropdown>
+  <div ngbDropdownMenu class="user-dropdown-menu w-100 overflow-auto">
+    <ng-container *ngFor="let user of userList">
+      <div
+        ngbDropdownItem
+        class="d-flex gap-3 pe-auto overflow-hidden"
+        role="button"
+        (click)="selectTagUser(user)"
+      >
+        <img
+          loading="lazy"
+          class="w-32-px h-32-px rounded"
+          data-src="{{ user.ProfilePicName }}"
+          [alt]="user.Username"
+          onerror="this.onerror=null;this.src='assets/default-profile.jpg';"
+        />
+        <span>{{ user.Username }}</span>
+      </div>
+    </ng-container>
+  </div>
+</div> -->
+
+<div
+  #tagInputDiv
+  contenteditable
+  [attr.placeholder]="placeholder"
+  class="tag-input-div input-area c-text form-control"
+  (input)="messageOnKeyEvent()"
+  [mentionConfig]="{
+    items: userList,
+    labelKey: 'Username',
+    triggerChar: '@',
+  }"
+  [mentionListTemplate]="mentionListTemplate"
+  (itemSelected)="selectTagUser($event)"
+></div>
+
+<ng-template
+  #mentionListTemplate
+  let-item="item"
+  class="user-dropdown-menu w-100 overflow-auto"
+>
+  <div class="d-flex gap-3 pe-auto overflow-hidden">
+    <img
+      loading="lazy"
+      class="w-32-px h-32-px rounded"
+      data-src="{{ item.ProfilePicName }}"
+      [alt]="item.Username"
+      onerror="this.onerror=null;this.src='assets/default-profile.jpg';"
+    />
+    <span>{{ item.Username }}</span>
+  </div>
+</ng-template>
+
+<ng-container *ngIf="isShowMetaPreview && metaData?.metaimage">
+  <app-post-meta-data-card [post]="metaData" class="pt-5" />
+</ng-container>

@@ -1,0 +1,32 @@
+<div class="mobile-menu">
+  <ul class="bottom-navbar-nav">
+    <li class="bottom-nav-item" routerLinkActive="active">
+      <a routerLink="/home" class="bottom-nav-link">
+        <fa-icon [icon]="['fas', 'home']" [fixedWidth]="true" />
+        <span>Home</span>
+      </a>
+    </li>
+
+    <li class="bottom-nav-item" routerLinkActive="active" *ngIf="isUserMediaApproved() && channelId">
+      <!-- routerLink="/channels" -->
+      <a class="bottom-nav-link" (click)="getmyChannel()">
+        <fa-icon [icon]="['fas', 'user']" [fixedWidth]="true" />
+        <span>Channel</span>
+      </a>
+    </li>
+
+    <!-- <li class="bottom-nav-item" routerLinkActive="active">
+      <a routerLink="/video" class="bottom-nav-link">
+        <fa-icon [icon]="['fas', 'video']" [fixedWidth]="true" />
+        <span>Video</span>
+      </a>
+    </li> -->
+
+    <li class="bottom-nav-item" routerLinkActive="active" *ngIf="isUserMediaApproved() && channelId">
+      <a (click)="openVideoUploadPopUp()" class="bottom-nav-link">
+        <fa-icon [icon]="['fas', 'cloud-upload']" [fixedWidth]="true" />
+        <span>Upload</span>
+      </a>
+    </li>
+  </ul>
+</div>

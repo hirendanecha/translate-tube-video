@@ -1,0 +1,53 @@
+<div class="main-area p-3 notification-content modal-height">
+  <h5 class="mb-8">Notifications</h5>
+  <div class="dropdown-divider mb-2"></div>
+  <ng-container *ngFor="let notification of sharedService.notificationList">
+    <div class="single-box p-2" *ngIf="notification.isRead === 'N'">
+      <a [href]="'https://translate.tube/post/' + notification.postId" target="_blank"
+        class="d-flex justify-content-between align-items-center"
+        (click)="readUnreadNotification(notification.postId, notification.id)"
+      >
+        <div class="left-item position-relative d-inline-flex gap-3">
+          <div class="avatar position-relative d-inline-flex">
+            <img
+              class="avatar-img w-48-px h-48-px rounded-5"
+              loading="lazy"
+              data-src="{{
+                notification?.ProfilePicName ||
+                  '/assets/images/avtar/placeholder-user.png'
+              }}"
+              onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+              alt="avatar"
+            />
+          </div>
+          <div class="text-area">
+            <h6 class="m-0 mb-1">
+              {{ notification?.Username }}
+              <span
+                *ngIf="notification.isRead === 'N'"
+                class="unread-notification smtxt"
+              ></span>
+              <span class="font-12-px">
+                <fa-icon class="ms-2" [icon]="['fas', 'clock']" />
+                {{ notification?.createDate | dateDay }}</span
+              >
+            </h6>
+            <p class="mdtxt">{{ notification?.notificationDesc }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!sharedService.notificationList.length">
+    <span>No notification</span>
+  </ng-container>
+</div>
+<div class="dropdown-divider"></div>
+<div
+  class="btn-area m-2"
+  *ngIf="sharedService.notificationList.length > 0"
+  (click)="closeModal()"
+>
+  <a routerLink="/notifications">See all notifications</a>
+</div>

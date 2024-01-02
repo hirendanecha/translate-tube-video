@@ -1,0 +1,26 @@
+<!-- <ngb-toast *ngFor="let toast of toastService.toasts" [class]="toast.className" [autohide]="true" [delay]="toast.delay || 5000" (hidden)="toastService.remove(toast)"> -->
+    <!-- [header]="toast.textOrTpl" -->
+    <!-- {{toast.textOrTpl}}
+</ngb-toast> -->
+
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <ngb-toast
+      *ngFor="let toast of toastService.toasts"
+      [ngClass]="toast.className"
+      [autohide]="true"
+      [delay]="toast.delay || 5000"
+      (hidden)="toastService.remove(toast)"
+    >
+      <div class="d-flex flex-coumn w-100">
+        <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text">
+          <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
+        </ng-template>
+  
+        <ng-template #text>{{ toast.textOrTpl }}</ng-template>
+      </div>
+  
+      <fa-icon [icon]="['fas', 'xmark']" class="c-pointer c-icon-color" (click)="toastService.remove(toast)" ></fa-icon>
+    </ngb-toast>
+  </div>
+  

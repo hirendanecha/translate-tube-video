@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>$TITLE</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+    <meta name="title" content="$TITLE" />
+    <meta name="description" content="$DESCRIPTION" />
+    <meta name="keywords" content="$OG_META_KEYWORDS" />
+    <meta name="metaDescription" content="$OG_META_DESCRIPTION" />
+    <meta name="metaKeywords" content="$OG_META_KEYWORDS" />
+    <meta property="og:title" content="$OG_TITLE" />
+    <meta property="og:description" content="$OG_DESCRIPTION" />
+    <meta property="og:site_name" content="$OG_SITE" />
+    <meta property="og:url" content="$OG_URL" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="$OG_IMAGE" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="95" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="$OG_SITE" />
+    <meta name="twitter:title" content="$OG_TITLE" />
+    <meta property="twitter:image" content="$OG_IMAGE" />
+    <meta name="twitter:description" content="$OG_DESCRIPTION" />
+    <base href="/" />
+    <script
+      type="text/javascript"
+      src="https://cdn.jwplayer.com/libraries/JPyzCeMq.js"
+    ></script>
+  </head>
+  <style>
+    .splash-screen {
+      background: var(--body-bg);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      opacity: 1;
+    }
+
+    .logo {
+      background-image: url(/assets/default-profile.jpg);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      border-radius: 50%;
+      height: 75px;
+      width: 75px;
+      border: 2px solid#000428;
+
+      -webkit-animation-name: spinner;
+      -webkit-animation-timing-function: linear;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-duration: 2s;
+      animation-name: spinner;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-duration: 2s;
+      -webkit-transform-style: preserve-3d;
+      -moz-transform-style: preserve-3d;
+      -ms-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+    }
+
+    @-webkit-keyframes spinner {
+      from {
+        -webkit-transform: rotateY(0deg);
+      }
+
+      to {
+        -webkit-transform: rotateY(-360deg);
+      }
+    }
+
+    @keyframes spinner {
+      from {
+        -moz-transform: rotateY(0deg);
+        -ms-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+      }
+
+      to {
+        -moz-transform: rotateY(-360deg);
+        -ms-transform: rotateY(-360deg);
+        transform: rotateY(-360deg);
+      }
+    }
+  </style>
+  <body>
+    <div id="splashScreenLoader" class="splash-screen">
+      <div class="splash-inner">
+        <div class="logo"></div>
+      </div>
+    </div>
+    <app-root></app-root>
+  </body>
+</html>

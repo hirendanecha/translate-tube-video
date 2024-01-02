@@ -1,0 +1,52 @@
+<div class="modal-header">
+  <h5 class="modal-title">Create Conference Link</h5>
+  <fa-icon
+    class="font-28-px cursor"
+    [icon]="['fas', 'xmark']"
+    [fixedWidth]="true"
+    (click)="activateModal.close()"
+  />
+</div>
+
+<div class="modal-body d-flex flex-column">
+  <div class="form-group d-flex c-btn">
+    <div class="input-group-prepend">
+      <span class="input-group-text h-100 border-0 pe-0">{{ originUrl }}</span>
+    </div>
+    <input
+      type="text"
+      class="form-control ps-1"
+      name="cSlug"
+      [(ngModel)]="link"
+      (ngModelChange)="link = slugify($event)"
+      placeholder="create your link here"
+      #linkInput
+    />
+    <button class="btn" [disabled]="!link">
+      <fa-icon
+        title="Copy link"
+        class="font-20-px"
+        [icon]="['fas', 'copy']"
+        [fixedWidth]="true"
+        [appCopyClipboard]="originUrl + link"
+      />
+    </button>
+  </div>
+  <span class="modal-title text-center"
+    >Email or text the URL to attendees, the link works on any device</span
+  >
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-danger text-white" (click)="activateModal.close()">
+    Cancel
+  </button>
+  <button
+    title="Start Conference"
+    class="btn btn-success text-white"
+    (click)="openConferenceCall()"
+    [disabled]="!link"
+  >
+    Start
+  </button>
+</div>

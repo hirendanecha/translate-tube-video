@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .post-description {
+    max-width: 630px;
+    line-break: anywhere;
+    .post-img {
+      max-width: 630px;
+    }
+  }
+}

@@ -1,0 +1,130 @@
+.top-area {
+  background: var(--link-bg);
+  color: var(--text-color);
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+.header-text {
+  font-size: 18px;
+  color: var(--text-color);
+}
+.sub-text {
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+.c-width {
+  overflow: hidden;
+}
+
+.c-input-border {
+  input {
+    border: none;
+    background: var(--bg-secondary);
+    width: 100%;
+    color: var(--text-color);
+  }
+
+  :focus {
+    outline: none !important;
+  }
+}
+
+.right-sidebar.cus-scrollbar {
+  position: fixed;
+  top: 107px;
+  max-height: calc(100vh - 112px);
+  overflow-x: auto;
+  padding: 30px !important;
+}
+
+.list-unstyled {
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  font-size: 11px;
+  text-align: center;
+  display: flex;
+
+  li {
+    padding: 3px;
+    span {
+      font-size: 11px;
+    }
+  }
+}
+::ng-deep {
+  .c-searchbar .input-group {
+    flex-wrap: unset;
+  }
+
+  .c-search-dropdown {
+    .dropdown-toggle::after {
+      display: none;
+    }
+
+    .dropdown-menu {
+      border: 1px solid var(--link-color);
+      border-radius: 5px;
+      max-height: 332px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+
+    .dropdown-menu .dropdown-item {
+      font-size: 16px;
+    }
+  }
+
+  .sub-text {
+
+    span,
+    h1,
+    a,
+    p {
+      font-size: 15px;
+      color: var(--text-color) !important;
+      background-color: unset !important;
+    }
+  }
+
+  @media (max-width: 770px) {
+    .osahan-navbar-search {
+      .form-control {
+        max-width: unset !important;
+        width: unset !important;
+      }
+    }
+  }
+  .c-description-height{ 
+  span,
+  h1{
+    color: var(--text-color) !important;
+    background-color: unset !important;
+    }
+  }
+  .style-scope{
+    color: var(--text-color) !important;
+    background-color: unset !important;
+  }
+  .comment-input {
+    font-size: 16px;
+    outline: none;
+    align-self: center;
+  }
+
+  label {
+    margin: 0;
+  }
+
+  .c-dropdown {
+    .dropdown-toggle::after {
+      display: none;
+    }
+
+    .dropdown-menu {
+      border: 1px solid var(--link-color);
+      border-radius: 15px;
+    }
+  }
+}

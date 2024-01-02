@@ -1,0 +1,160 @@
+<div class="upload-details">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="main-title">
+        <h6>Settings</h6>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="userForm" (change)="onChangeData()">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label"
+            >First Name <span class="required">*</span></label
+          >
+          <input
+            class="form-control border-form-control"
+            formControlName="FirstName"
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label"
+            >Last Name <span class="required">*</span></label
+          >
+          <input
+            class="form-control border-form-control"
+            formControlName="LastName"
+            type="text"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label"
+            >Username <span class="required">*</span></label
+          >
+          <input
+            class="form-control border-form-control"
+            formControlName="Username"
+            type="text"
+          />
+          <div
+            class="srv-validation-message text-danger"
+            *ngIf="userForm?.controls['Username']?.invalid &&
+                     userForm?.controls['Username']?.errors?.['required']"
+          >
+            Username field is required.
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label"
+            >Phone <span class="required">*</span></label
+          >
+          <input
+            class="form-control border-form-control"
+            formControlName="MobileNo"
+            type="number"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label"
+            >Country <span class="required">*</span></label
+          >
+          <select
+            id="Country"
+            required
+            name="Country"
+            class="form-control w-100"
+            [(ngModel)]="useDetails.Country"
+            [ngModelOptions]="{ standalone: true }"
+            (change)="changeCountry($event)"
+          >
+            <option
+              [value]="item.country_code"
+              *ngFor="let item of allCountryData"
+            >
+              {{ item.country }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label"
+            >Zip Code <span class="required">*</span></label
+          >
+          <input
+            class="form-control border-form-control"
+            formControlName="Zip"
+            type="number"
+            #zipCode
+          />
+          <div
+            class="srv-validation-message text-danger"
+            *ngIf="userForm.controls['Zip'].invalid &&
+                     userForm.controls['Zip'].errors?.['required']"
+          >
+            Zip field is required.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label"
+            >State <span class="required">*</span></label
+          >
+          <input
+            class="form-control border-form-control"
+            formControlName="State"
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label"
+            >City <span class="required">*</span></label
+          >
+          <input
+            class="form-control border-form-control"
+            formControlName="City"
+            type="text"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 text-right">
+        <button
+          type="button"
+          class="btn btn-outline-danger btn-block btn-md"
+          (click)="resetForm()"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-block btn-md ms-4"
+          (click)="saveChanges()"
+          [disabled]="!isEdit && userForm.invalid"
+        >
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

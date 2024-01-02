@@ -1,0 +1,108 @@
+<div
+  class="jumbotron dash-container mb-0 mx-sm-4 pt-4 videos-section pb-4 rounded mb-4 shadow"
+>
+  <div>
+    <div class="col-12 col-md-12 col-lg-8 m-auto token-img-modal token-hide-mb">
+      <img
+        loading="lazy"
+        data-src="{{ '/assets/img/localFoodslogo.png' }}"
+        class="w-100"
+        alt=""
+      />
+    </div>
+    <div
+      class="d-xl-flex column-gap-2 column-gap-xxl-4 col-12 col-md-12 col-lg-8 m-auto px-4 mt-4 justify-content-center mb-view-left-txt c-searchbar"
+    >
+    <div class="form-inline osahan-navbar-search">
+        <div class="input-group">
+          <input class="form-control c-input-height"type="text"
+          [(ngModel)]="searchText"
+          autocomplete="off"
+          placeholder="Search for...">
+          <div class="input-group-append c-button">
+             <button class="btn btn-light" type="button" [disabled]="!searchText" (click)="getSearchData(searchText)">
+              <fa-icon [icon]="['fas', 'search']" [fixedWidth]="true" />
+             </button>
+          </div>
+       </div>
+        <!-- <div class="input-group form-control c-input-border">
+          <fa-icon [icon]="['fas', 'magnifying-glass']" class="m-1" />
+          <input
+            type="text"
+            [(ngModel)]="searchText"
+            autocomplete="off"
+            (keyup)="getSearchData()"
+            placeholder="Search for..."
+          />
+        </div> -->
+        <!-- <div class="input-group-append">
+          <button class="btn btn-light" type="button" [disabled]="!searchText.length" (click)="getSearchData()">
+            <fa-icon [icon]="['fas', 'search']" [fixedWidth]="true" />
+          </button>
+        </div> -->
+      </div>
+    </div>
+    <ng-container *ngIf="searchText">
+      <div class="col-xxl-4 col-xl-6 col-lg-6 col-10 pt-1 m-auto">
+        <div #userSearchDropdownRef ngbDropdown class="c-search-dropdown">
+          <div ngbDropdownMenu class="search-user-list w-100">
+            <ng-container *ngFor="let user of userList">
+              <div
+                ngbDropdownItem
+                class="d-flex gap-3 pe-auto"
+                role="button"
+                (click)="openProfile(user.Id)"
+              >
+                <img
+                  loading="lazy"
+                  class="w-32-px h-32-px rounded"
+                  data-src="{{ user.ProfilePicName }}"
+                  [alt]="user.Username"
+                  onerror="this.onerror=null;this.src='assets/default-profile.jpg';"
+                />
+                <span>{{ user.Username }}</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div *ngIf="isUserMediaApproved() && channelId"
+      class="d-flex c-bg-color py-2 column-gap-2 column-gap-xxl-4 col-12 col-md-12 col-lg-8 m-auto mt-4 my-xxl-4 justify-content-center mb-view-left-txt"
+    >
+      <!-- routerLink="/channels" -->
+      <div 
+        (click)="getmyChannel()"
+        class="d-block d-md-flex gap-2 align-items-center c-text flex-wrap justify-content-center"
+      >
+        <fa-icon [icon]="['fas', 'user']" [fixedWidth]="true" />
+        My Channel
+      </div>
+      <!-- <div
+        *ngIf="isUserMediaApproved()"
+        class="d-flex gap-2 align-items-center c-text flex-wrap justify-content-center"
+        (click)="createChannel()"
+      >
+        <fa-icon [icon]="['fas', 'plus']" [fixedWidth]="true" />
+        Create Channel
+      </div> -->
+      <div *ngIf="channelId === channelData?.id"
+        class="d-block d-md-flex gap-2 align-items-center c-text flex-wrap justify-content-center"
+        (click)="openVideoUploadPopUp()"
+      >
+        <fa-icon [icon]="['fas', 'upload']" [fixedWidth]="true" />
+        Upload
+      </div>
+      <div *ngIf="channelId === channelData?.id"
+        class="d-flex gap-2 align-items-center c-text flex-wrap justify-content-center"
+        (click)="openConferencePopUp()"
+      >
+        <!-- ngbTooltip="Coming Soon!"
+        placement="bottom" -->
+        <fa-icon [icon]="['fas', 'plus-square']" [fixedWidth]="true" />
+        Conference
+        <span class="d-none d-xl-block">& Record</span>
+      </div>
+    </div>
+  </div>
+</div>

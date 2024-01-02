@@ -1,0 +1,24 @@
+.play-icon {
+  .ng-fa-icon {
+    bottom: 10px;
+  }
+}
+.video-title {
+  margin-bottom: 5px;
+  height: 18px !important;
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+}
+.c-description-height {
+  height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-color) !important;
+  background-color: unset !important;
+}
+.c-height {
+  height: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

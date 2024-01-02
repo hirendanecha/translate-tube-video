@@ -1,0 +1,91 @@
+<div class="single-channel-image">
+  <img class="img-fluid" alt="" src="/assets/img/channel-banner.png" />
+  <div class="channel-profile">
+    <img
+      class="channel-profile-img"
+      alt=""
+      [src]="channelDetails?.profile_pic_name"
+      onerror="this.onerror=null;this.src='assets/default-profile.jpg';"
+    />
+  </div>
+</div>
+<div class="single-channel-nav">
+  <nav class="navbar navbar-expand-lg navbar-light w-100">
+    <a class="channel-brand"
+      >{{ channelDetails.firstname }}
+      <span
+        title=""
+        data-placement="top"
+        data-toggle="tooltip"
+        data-original-title="Verified"
+      >
+        <fa-icon [icon]="['fas', 'check-circle']" [fixedWidth]="true" /> </span
+    ></a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav w-100 mr-auto">
+        <li
+          class="nav-item"
+          (click)="activeTab = 1"
+          [ngClass]="activeTab === 1 ? 'active' : ''"
+        >
+          <a class="nav-link">Videos <span class="sr-only">(current)</span></a>
+        </li>
+        <li
+          class="nav-item"
+          (click)="activeTab = 2"
+          [ngClass]="activeTab === 2 ? 'active' : ''"
+        >
+          <a class="nav-link">Playlist</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link">Channels</a>
+        </li> -->
+      </ul>
+      <form class="d-flex form-inline my-2 my-lg-0">
+        <input
+          class="form-control form-control-sm mr-sm-1"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        /><button
+          class="btn btn-outline-success btn-sm my-2 my-sm-0"
+          type="submit"
+        >
+          <fa-icon [icon]="['fas', 'search']" [fixedWidth]="true" />
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <button class="btn btn-outline-danger btn-sm" type="button">
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </nav>
+</div>
+
+<div class="video-block section-padding">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="main-title mt-3">
+        <ng-container *ngIf="activeTab === 1">
+          <h6>My Videos</h6>
+          <app-video-card [videoData]="videoList" />
+        </ng-container>
+        <ng-container *ngIf="activeTab === 2">
+          <h6>My Playlist</h6>
+          <app-video-card [videoData]="videoList" />
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,212 @@
+<ng-container *ngIf="!isProgress">
+  <div class="modal-header">
+    <h6 class="text-start m-0">{{ title }}</h6>
+
+    <fa-icon
+      [icon]="['fas', 'xmark']"
+      class="font-20-px"
+      role="button"
+      (click)="activeModal.close()"
+    />
+  </div>
+
+  <div class="modal-body text-center">
+    <form class="form-dark row" ngNativeValidate autocomplete="off">
+      <div class="col-12 mb-5">
+        <label class="form-label d-flex"
+          >Video Title(max 50 characters)<span class="text-danger"
+            >*</span
+          ></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          name="albumname"
+          [(ngModel)]="postData.albumname"
+          placeholder="Enter your video title"
+        />
+      </div>
+      <div class="col-12 mb-3">
+        <label class="form-label d-flex"
+          >Video Description(max 500 characters)</label
+        >
+        <app-tag-user-input
+          placeholder=""
+          [isShowMetaPreview]="false"
+          [isAllowTagUser]="true"
+          [value]="postMessageInputValue"
+          (onDataChange)="onTagUserInputChangeEvent($event)"
+        />
+      </div>
+
+      <div class="col-6 mb-3">
+        <label class="form-label d-flex"
+          >Thumbnail<span class="text-danger">*</span></label
+        >
+        <div class="d-flex" *ngIf="!selectedThumbFile">
+          <fa-icon
+            [icon]="['fas', 'file-upload']"
+            class="text-primary cursor font-24-px"
+            (click)="uploadImage.click()"
+          />
+          <input
+            #uploadImage
+            class="d-none"
+            type="file"
+            id="fileInput"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+          />
+        </div>
+        <ng-container *ngIf="selectedThumbFile">
+          <div class="position-relative w-100-px h-100-px">
+            <img
+              loading="lazy"
+              data-src="{{ selectedThumbFile }}"
+              class="w-100 h-100 rounded-4"
+              alt="icon"
+              onerror="this.onerror=null;"
+            />
+            <fa-icon
+              [icon]="['fas', 'xmark']"
+              class="position-absolute top-0 start-100 translate-middle badge bg-danger p-1 font-12-px c-pointer c-icon-color"
+              role="button"
+              (click)="removePostSelectedFile()"
+            />
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="col-6 mb-5 d-grid">
+        <label class="form-label d-flex"
+          >Video<span class="text-danger">*</span><span class="d-none d-sm-block ms-2">(Max. video size allowed is 2 GB)</span></label
+        >
+        <div class="d-flex" *ngIf="!selectedVideoFile">
+          <div class="d-flex align-items-center">
+          <fa-icon
+            [icon]="['fas', 'file-upload']"
+            class="text-primary cursor font-24-px"
+            (click)="uploadVideo.click()"
+          />
+          <div class="ms-2" *ngIf="fileSizeError">Please select another file to upload</div>
+        </div>
+        <input
+          #uploadVideo
+          class="d-none"
+          type="file"
+          id="fileInput"
+          (change)="onSelectedVideo($event)"
+          accept="video/mp4*"
+        />
+        </div>
+        <div *ngIf="selectedVideoFile">
+          <!-- autoplay="autoplay" -->
+          <video
+            #videoPlayer
+            class="w-100 h-200-px"
+            src="{{ selectedVideoFile }}"
+            controls
+            autoplay="autoplay"
+            (play)="onvideoPlay($event)"
+          ></video>
+          <fa-icon
+            [icon]="['fas', 'xmark']"
+            class="position-absolute translate-middle badge bg-danger p-1 font-12-px c-pointer c-icon-color"
+            role="button"
+            (click)="removeVideoSelectedFile()"
+          />
+        </div>
+      </div>
+      <div class="col-12 mb-5">
+        <label class="form-label d-flex"
+          >Enter Upto 5 Tags Separated By A Comma<span
+            class="text-danger"
+          ></span
+        ></label>
+        <input
+          type="text"
+          class="form-control"
+          name="keywords"
+          [(ngModel)]="postData.keywords"
+          placeholder="Enter keywords"
+          (keyup)="onChangeTag($event)"
+        />
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer" [ngClass]="{'justify-content-between': postData.id, 'justify-content-end': !postData.id}">
+    <div *ngIf="postData.id">
+      <button
+        type="button"
+        class="btn btn-sm btn-danger"
+        (click)="deletePost()"
+      >
+        {{ deleteButtonLabel }}
+      </button>
+    </div>
+
+    <div>
+      <button
+        type="button"
+        class="btn btn-sm btn-secondary"
+        (click)="activeModal.close('cancel')"
+      >
+        {{ cancelButtonLabel }}
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-sm btn-success ms-3"
+        (click)="uploadImgAndSubmit()"
+      >
+        {{ confirmButtonLabel }}
+      </button>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isProgress">
+  <!-- <div class="modal-header justify-content-end">
+    <fa-icon
+      [icon]="['fas', 'xmark']"
+      class="font-20-px"
+      role="button"
+      (click)="activeModal.close()"
+    />
+  </div> -->
+  <div class="modal-body text-center">
+    <div class="progress-bar-body">
+      <h5>
+        It will take a while to upload long videos or if your internet connection is bad.
+        You MUST keep your browser tab open to avoid interruptions. 
+        If you close this browser tab, you video will stop uploading. 
+      </h5>
+    </div>
+    <div class="osahan-progress">
+      <div class="progress">
+        <div
+          class="progress-bar progress-bar-striped progress-bar-animated"
+          role="progressbar"
+          [style.width.%]="progressValue"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          [attr.aria-valuenow]="progressValue"
+        >
+          {{ progressValue }}%
+        </div>
+
+        <!-- <progress max="100" [value]="progressValue"></progress> -->
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer justify-content-end gap-2">
+    <button
+      type="button"
+      class="btn btn-sm btn-danger"
+      (click)="goToHome()"
+    >
+      Stop upload
+    </button>
+  </div>
+</ng-container>

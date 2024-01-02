@@ -1,0 +1,54 @@
+.video-container {
+  min-height: 378px;
+}
+.video-card-image {
+  height: 220px;
+}
+
+.video-title {
+  margin-bottom: 5px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+::ng-deep .c-description-height {
+  // height: 45px;
+  // height: 38px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 15px;
+  max-height: 47px;
+
+  a{
+    h1,h2,h3,h4,h5,h6,span,p {
+      font-size: 15px;
+      // color: inherit;
+      text-decoration: none;
+      color: var(--text-color) !important;
+      background-color: unset !important;
+    }
+    
+  }
+}
+.c-height {
+  height: 28px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.video-view {
+  font-size: 14px;
+}
+
+.time {
+  // width: 100%;
+  justify-content: flex-end;
+  bottom: 0;
+  right: 0;
+}

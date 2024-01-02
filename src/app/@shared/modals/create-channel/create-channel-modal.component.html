@@ -1,0 +1,46 @@
+<div class="modal-header">
+  <h5 class="modal-title">Create Channel</h5>
+  <fa-icon class="font-28-px cursor" [icon]="['fas', 'xmark']" [fixedWidth]="true"(click)="activateModal.close()" />
+</div>
+
+<div class="modal-body d-flex flex-column">
+  <form [formGroup]="userForm">
+    <div class="row justify-content-center mt-2">
+      <div class="col-md-6">
+        <label>Channel Name</label>
+        <input class="form-control" formControlName="firstname" name="FirstName" type="text" (keyup)="onChannelNameChange()" />
+      </div>
+      <div class="col-md-6">
+        <label>Unique Link</label>
+        <input class="form-control" name="Unique Link" formControlName="unique_link" type="text" />
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center mt-4">
+      <div class="col d-flex flex-column">
+        <label>Channel Profile</label>
+        <div class="d-flex cursor" *ngIf="!selectedFile">
+          <fa-icon class="font-32-px" [icon]="['fas', 'folder-open']" [fixedWidth]="true"(click)="uploadImage.click()" />
+          <input #uploadImage class="d-none" type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" formControlName="profile_pic_name" />
+        </div>
+
+        <ng-container *ngIf="selectedFile">
+          <div class="d-flex flex-row-reverse justify-content-end cursor">
+            <fa-icon [icon]="['fas', 'xmark']" [fixedWidth]="true"(click)="removePostSelectedFile()" />
+            <img loading="lazy" height="150" width="150" data-src="{{ selectedFile }}" class="w-100-px h-100-px rounded-4 mt-2" alt="icon" onerror="this.onerror = null;" />
+          </div>
+        </ng-container>
+      </div>
+      <div class="col align-self-center">
+        <label class="form-check-label" for="flexSwitchCheckChecked">Feature</label>
+        <div class="form-check form-switch cursor font-28-px">
+          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" formControlName="feature"/>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-danger text-white" (click)="activateModal.close()">Cancel</button>
+  <button class="btn btn-secondary text-white" type="submit" (click)="upload()">Save</button>
+</div>

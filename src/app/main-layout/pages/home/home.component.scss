@@ -1,0 +1,25 @@
+.main-title {
+  h6 {
+    align-items: center;
+    display: flex;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+::ng-deep {
+  .icon-color fa-icon svg path {
+    fill: red;
+    opacity: 0.9;
+  }
+  .loading-text {
+    top: 50% !important;
+  }
+}
+
+.c-box {
+  padding: 15px;
+  border-radius: 2px;
+  background: var(--bg-sidebar);
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}

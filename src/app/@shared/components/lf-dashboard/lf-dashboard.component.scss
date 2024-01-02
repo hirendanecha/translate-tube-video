@@ -1,0 +1,70 @@
+.dash-container {
+  background: var(--card-bg);
+  .c-bg-color {
+    background: var(--bg-secondary);
+    align-items: center;
+    div {
+      cursor: pointer;
+    }
+
+    fa-icon {
+      border-radius: 50%;
+      padding: 3px;
+      font-size: 16px;
+      background: var(--bg-sidebar);
+      width: 30px;
+      height: 30px;
+      text-align: center;
+    }
+  }
+  .c-text {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text-color);
+  }
+  .c-input-height {
+    height: 35px;
+  }
+  .c-input-border {
+    input {
+      border: none;
+      background: var(--bg-secondary);
+      width: 100%;
+      color: var(--text-color);
+    }
+    :focus {
+      outline: none !important;
+    }
+  }
+  ::ng-deep {
+    .c-searchbar .input-group {
+      flex-wrap: unset;
+    }
+    .c-search-dropdown {
+      .dropdown-toggle::after {
+        display: none;
+      }
+      .dropdown-menu {
+        border: 1px solid var(--link-color);
+        border-radius: 5px;
+        max-height: 332px;
+        overflow-y: scroll;
+      }
+      .dropdown-menu .dropdown-item {
+        font-size: 16px;
+      }
+    }
+    .c-button svg path {
+      fill: var(--blue-text);
+    }
+
+    @media (max-width: 770px) {
+      .osahan-navbar-search {
+        .form-control {
+          max-width: unset !important;
+          width: unset !important;
+        }
+      }
+    }
+  }
+}

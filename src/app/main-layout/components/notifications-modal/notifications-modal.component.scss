@@ -1,0 +1,22 @@
+::ng-deep {
+  .notifications-modal {
+    cursor: pointer;
+    position: fixed;
+    right: 185px;
+    top: 28px;
+    display: flex;
+    bottom: unset !important;
+    min-width: 280px;
+    max-width: 80vw;
+
+    @media (max-width: 556px) {
+      top: 52px;
+      right: 75px;
+    }
+  }
+}
+
+.modal-height{
+  max-height: 500px;
+  overflow: auto;
+}

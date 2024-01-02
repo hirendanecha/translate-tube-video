@@ -1,0 +1,35 @@
+.single-box{
+  background: var( --bg-white);
+}
+.notification-single {
+  .notification-area {
+    .c-font{
+      font-weight: 600;
+    }
+    .unread-notification {
+      width: 13px;
+      height: 13px;
+      background: var(--primary-color);
+      border-radius: 50%;
+    }
+  }
+  .dropdown-toggle::after {
+    display: none;
+  }
+  button {
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: var(--para-1st-color);
+    background-color: transparent;
+  }
+}
+.notification-single {
+  border-bottom: 1px solid var(--border-color);
+  a {
+    display: inline;
+  }
+  &:last-child {
+    border: none;
+  }
+}
