@@ -9,7 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev:ssr": "ng run video-translate-tube:dev-serve-ssr",
-    "serve:ssr": "node dist-video/video-translate-tube/server/main.js",
+    "serve:ssr": "node tube-dist/video-translate-tube/server/main.js",
     "build:ssr": "ng build && ng run video-translate-tube:server",
     "prerender": "ng run video-translate-tube:prerender"
   },

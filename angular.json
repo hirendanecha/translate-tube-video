@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist-video/video-translate-tube/browser",
+            "outputPath": "tube-dist/video-translate-tube/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [

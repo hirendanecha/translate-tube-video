@@ -17,7 +17,7 @@ const api_url = environment.apiUrl;
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
-  const distFolder = join(process.cwd(), 'dist-video/video-translate-tube/browser');
+  const distFolder = join(process.cwd(), 'tube-dist/video-translate-tube/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html'))
     ? 'index.original.html'
     : 'index';
@@ -26,7 +26,7 @@ export function app(): express.Express {
   const path = require('path');
   const template = fs
     .readFileSync(
-      path.join(join(process.cwd(), 'dist-video/video-translate-tube/browser'), 'index.html')
+      path.join(join(process.cwd(), 'tube-dist/video-translate-tube/browser'), 'index.html')
     )
     .toString();
   // Shim for the global window and document objects.
