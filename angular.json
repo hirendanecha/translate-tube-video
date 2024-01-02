@@ -114,7 +114,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist-video/video-translate-tube/server",
+            "outputPath": "tube-dist/video-translate-tube/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
             "inlineStyleLanguage": "scss"
