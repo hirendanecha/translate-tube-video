@@ -10,9 +10,9 @@ import { AuthService } from '../@shared/services/auth.service';
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
-  styleUrls: ['./main-layout.component.scss']
+  styleUrls: ['./main-layout.component.scss'],
 })
-export class MainLayoutComponent implements OnInit{
+export class MainLayoutComponent implements OnInit {
   tokenData: any;
   constructor(
     public shareService: ShareService,
@@ -21,7 +21,7 @@ export class MainLayoutComponent implements OnInit{
     private router: Router,
     private spinner: NgxSpinnerService,
     private authService: AuthService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.spinner.show();
@@ -32,13 +32,14 @@ export class MainLayoutComponent implements OnInit{
       })
       .subscribe({
         next: (res) => {
-          this.spinner.hide()
+          this.spinner.hide();
           this.tokenData = { ...res };
           const auth = this.tokenData?.user;
           const token = this.tokenData?.accessToken;
-          const isLogin = (token && auth) ? true : false;
+          const isLogin = token && auth ? true : false;
+          this.authService.setToken(token);
           // this.authService.setUserData(auth)
-          this.shareService.getUserDetails(auth?.profileId)
+          this.shareService.getUserDetails(auth?.profileId);
           this.authService.userDetails = auth;
           this.authService.token = token;
           // if (!isLogin) {
@@ -51,6 +52,5 @@ export class MainLayoutComponent implements OnInit{
           console.log(err);
         },
       });
-    
   }
 }

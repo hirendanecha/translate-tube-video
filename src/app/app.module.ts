@@ -22,7 +22,7 @@ import { CookieService } from 'ngx-cookie-service';
     BrowserAnimationsModule,
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },
     provideClientHydration(),
     UserAuthGuard,
     CookieService,
