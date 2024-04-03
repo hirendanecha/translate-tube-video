@@ -74,6 +74,14 @@
         </div>
       </div>
     </ng-container>
+    <div
+    class="d-flex align-items-center justify-content-center m-3 cursor"
+    (click)="loadMoreNotification()"
+    *ngIf="hasMoreData"
+  >
+    <fa-icon [icon]="['fas', 'refresh']" class="font-24-px me-2"></fa-icon>
+    <span>Loadmore</span>
+  </div>
   </ng-container>
 
   <ng-container *ngIf="notificationList.length === 0">

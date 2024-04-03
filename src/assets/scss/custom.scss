@@ -161,7 +161,7 @@ body.fixed-nav #content-wrapper {
 .scroll-to-top {
   background: var(--bg-secondary);
   border-radius: 70px !important;
-  bottom: 50px;
+  bottom: 80px;
   color: #fff;
   height: 50px;
   line-height: 46px;
@@ -1279,8 +1279,8 @@ h6 {
 }
 
 .time {
-  background: #f5234a none repeat scroll 0 0;
-  border-radius: 2px;
+  background: #061726 none repeat scroll 0 0;
+  border-radius: 10px;
   bottom: 5px;
   color: var(--text-color);
   font-size: 11px;
@@ -1289,7 +1289,7 @@ h6 {
   padding: 0 6px;
   position: absolute;
   right: 5px;
-  border: 2px solid #fff;
+  // border: 2px solid #fff;
 }
 
 .video-card:hover .time {

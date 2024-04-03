@@ -139,8 +139,8 @@ export class CommonService {
 
   deleteComments() { }
 
-  getNotificationList(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}customers/get-notification/${id}`);
+  getNotificationList(id: number, data = {}): Observable<any> {
+    return this.http.post(`${this.apiUrl}customers/get-notification/${id}`, data);
   }
 
   deleteNotification(id: number): Observable<any> {

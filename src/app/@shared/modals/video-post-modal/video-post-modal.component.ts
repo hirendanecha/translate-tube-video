@@ -334,7 +334,8 @@ export class VideoPostModalComponent implements OnInit, AfterViewInit {
 
   onSelectedVideo(event: any) {
     // const maxSize = 2*10^9;
-    const maxSize = 2147483648; //2GB
+    // const maxSize = 2147483648; //2GB
+    const maxSize = 10737418240; //10GB
     if (event.target?.files?.[0].size < maxSize) {
         this.fileSizeError = false
       if (event.target?.files?.[0].type.includes('video/mp4')) {
@@ -346,7 +347,7 @@ export class VideoPostModalComponent implements OnInit, AfterViewInit {
         this.toastService.warring('please upload only mp4 files');
       }
     }else{
-      this.toastService.warring('Maximum video size allowed is 2 GB.');
+      this.toastService.warring('Maximum video size allowed is 10 GB.');
       this.fileSizeError = true
     }
   }
