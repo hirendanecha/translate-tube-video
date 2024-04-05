@@ -14,7 +14,7 @@ import { NotificationsModalComponent } from '../notifications-modal/notification
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
   userDetails: any;
@@ -75,20 +75,23 @@ export class HeaderComponent implements OnInit {
   openVideoUploadPopUp(): void {
     const modalRef = this.modalService.open(VideoPostModalComponent, {
       centered: true,
-      size: 'lg'
+      size: 'lg',
     });
     modalRef.componentInstance.title = `Upload Video`;
     modalRef.componentInstance.confirmButtonLabel = 'Upload Video';
     modalRef.componentInstance.cancelButtonLabel = 'Cancel';
-    modalRef.result.then(res => {
-      console.log(res)
-    })
+    modalRef.result.then((res) => {
+      console.log(res);
+    });
   }
 
   openNotificationsModal(): void {
-    this.userMenusOverlayDialog = this.modalService.open(NotificationsModalComponent, {
-      keyboard: true,
-      modalDialogClass: 'notifications-modal',
-    });
+    this.userMenusOverlayDialog = this.modalService.open(
+      NotificationsModalComponent,
+      {
+        keyboard: true,
+        modalDialogClass: 'notifications-modal',
+      }
+    );
   }
 }

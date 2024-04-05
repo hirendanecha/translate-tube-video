@@ -12,6 +12,32 @@
 
   <div class="modal-body text-center">
     <form class="form-dark row" ngNativeValidate autocomplete="off">
+      <div class="col-12 mb-5" *ngIf="!postData?.id">
+        <label class="form-label d-flex"
+          >Select Channel<span class="text-danger">*</span></label
+        >
+        <!-- <select
+          type="text"
+          class="form-control"
+          name="albumname"
+          placeholder="Enter your video title"
+        >
+          <option value="" *ngFor="let channel of channelList">
+            <span>{{ channel.firstname }}</span>
+          </option>
+        </select> -->
+        <select
+          id="channel"
+          required
+          name="channel"
+          class="form-control w-100"
+          (change)="selectChannel($event.target.value)"
+        >
+          <option [value]="channel?.id" *ngFor="let channel of channelList">
+            <span>{{ channel.firstname }}</span>
+          </option>
+        </select>
+      </div>
       <div class="col-12 mb-5">
         <label class="form-label d-flex"
           >Video Title(max 50 characters)<span class="text-danger"
@@ -79,25 +105,30 @@
 
       <div class="col-6 mb-5 d-grid">
         <label class="form-label d-flex"
-          >Video<span class="text-danger">*</span><span class="d-none d-sm-block ms-2">(Max. video size allowed is 10 GB)</span></label
+          >Video<span class="text-danger">*</span
+          ><span class="d-none d-sm-block ms-2"
+            >(Max. video size allowed is 10 GB)</span
+          ></label
         >
         <div class="d-flex" *ngIf="!selectedVideoFile">
           <div class="d-flex align-items-center">
-          <fa-icon
-            [icon]="['fas', 'file-upload']"
-            class="text-primary cursor font-24-px"
-            (click)="uploadVideo.click()"
+            <fa-icon
+              [icon]="['fas', 'file-upload']"
+              class="text-primary cursor font-24-px"
+              (click)="uploadVideo.click()"
+            />
+            <div class="ms-2" *ngIf="fileSizeError">
+              Please select another file to upload
+            </div>
+          </div>
+          <input
+            #uploadVideo
+            class="d-none"
+            type="file"
+            id="fileInput"
+            (change)="onSelectedVideo($event)"
+            accept="video/mp4*"
           />
-          <div class="ms-2" *ngIf="fileSizeError">Please select another file to upload</div>
-        </div>
-        <input
-          #uploadVideo
-          class="d-none"
-          type="file"
-          id="fileInput"
-          (change)="onSelectedVideo($event)"
-          accept="video/mp4*"
-        />
         </div>
         <div *ngIf="selectedVideoFile">
           <!-- autoplay="autoplay" -->
@@ -135,7 +166,13 @@
     </form>
   </div>
 
-  <div class="modal-footer" [ngClass]="{'justify-content-between': postData.id, 'justify-content-end': !postData.id}">
+  <div
+    class="modal-footer"
+    [ngClass]="{
+      'justify-content-between': postData.id,
+      'justify-content-end': !postData.id
+    }"
+  >
     <div *ngIf="postData.id">
       <button
         type="button"
@@ -178,9 +215,10 @@
   <div class="modal-body text-center">
     <div class="progress-bar-body">
       <h5>
-        It will take a while to upload long videos or if your internet connection is bad.
-        You MUST keep your browser tab open to avoid interruptions. 
-        If you close this browser tab, you video will stop uploading. 
+        It will take a while to upload long videos or if your internet
+        connection is bad. You MUST keep your browser tab open to avoid
+        interruptions. If you close this browser tab, you video will stop
+        uploading.
       </h5>
     </div>
     <div class="osahan-progress">
@@ -201,11 +239,7 @@
     </div>
   </div>
   <div class="modal-footer justify-content-end gap-2">
-    <button
-      type="button"
-      class="btn btn-sm btn-danger"
-      (click)="goToHome()"
-    >
+    <button type="button" class="btn btn-sm btn-danger" (click)="goToHome()">
       Stop upload
     </button>
   </div>

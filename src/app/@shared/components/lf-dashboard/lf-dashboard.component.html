@@ -13,18 +13,29 @@
     <div
       class="d-xl-flex column-gap-2 column-gap-xxl-4 col-12 col-md-12 col-lg-8 m-auto px-4 mt-4 justify-content-center mb-view-left-txt c-searchbar"
     >
-    <div class="form-inline osahan-navbar-search">
+      <div
+        class="form-inline osahan-navbar-search"
+        *ngIf="shareService.getCredentials()"
+      >
         <div class="input-group">
-          <input class="form-control c-input-height"type="text"
-          [(ngModel)]="searchText"
-          autocomplete="off"
-          placeholder="Search for...">
+          <input
+            class="form-control c-input-height"
+            type="text"
+            [(ngModel)]="searchText"
+            autocomplete="off"
+            placeholder="Search for..."
+          />
           <div class="input-group-append c-button">
-             <button class="btn btn-light" type="button" [disabled]="!searchText" (click)="getSearchData(searchText)">
+            <button
+              class="btn btn-light"
+              type="button"
+              [disabled]="!searchText"
+              (click)="getSearchData(searchText)"
+            >
               <fa-icon [icon]="['fas', 'search']" [fixedWidth]="true" />
-             </button>
+            </button>
           </div>
-       </div>
+        </div>
         <!-- <div class="input-group form-control c-input-border">
           <fa-icon [icon]="['fas', 'magnifying-glass']" class="m-1" />
           <input
@@ -67,16 +78,49 @@
         </div>
       </div>
     </ng-container>
-    <div *ngIf="isUserMediaApproved() && channelId"
-      class="d-flex c-bg-color py-2 column-gap-2 column-gap-xxl-4 col-12 col-md-12 col-lg-8 m-auto mt-4 my-xxl-4 justify-content-center mb-view-left-txt"
+    <div
+      *ngIf="isUserMediaApproved() && channelList.length"
+      class="d-flex c-bg-color py-2 justify-content-evenly justify-content-md-center column-gap-2 column-gap-xxl-4 col-12 col-md-12 col-lg-8 m-auto mt-4 my-xxl-4 justify-content-center mb-view-left-txt"
     >
       <!-- routerLink="/channels" -->
-      <div 
+      <!-- <div
         (click)="getmyChannel()"
         class="d-block d-md-flex gap-2 align-items-center c-text flex-wrap justify-content-center"
       >
         <fa-icon [icon]="['fas', 'user']" [fixedWidth]="true" />
         My Channel
+      </div> -->
+
+      <div ngbDropdown class="d-flex flex-column flex-sm-row align-items-center gap-2 d-inline-block btn-group float-end right-action">
+        <fa-icon [icon]="['fas', 'user']" [fixedWidth]="true" />
+        <a
+          class="d-block d-md-flex gap-2 align-items-center c-text flex-wrap justify-content-center"
+          id="userDropdown"
+          role="button"
+          ngbDropdownToggle
+        >
+          My Channel
+        </a>
+        <div
+          ngbDropdownMenu
+          aria-labelledby="userDropdown"
+          class="shadow-lg p-1 mb-5 rounded"
+        >
+          <ng-container *ngFor="let channel of channelList">
+            <div
+              class="d-flex justify-content-start align-items-center"
+              ngbDropdownItem
+              (click)="getmyChannel(channel?.unique_link)"
+            >
+              <img
+                [src]="channel.profile_pic_name"
+                alt=""
+                class="me-3 w-32-px rounded-5"
+              />
+              <span class="c-text">{{ channel.firstname }}</span>
+            </div>
+          </ng-container>
+        </div>
       </div>
       <!-- <div
         *ngIf="isUserMediaApproved()"
@@ -86,23 +130,25 @@
         <fa-icon [icon]="['fas', 'plus']" [fixedWidth]="true" />
         Create Channel
       </div> -->
-      <div *ngIf="channelId === channelData?.id"
-        class="d-block d-md-flex gap-2 align-items-center c-text flex-wrap justify-content-center"
-        (click)="openVideoUploadPopUp()"
-      >
-        <fa-icon [icon]="['fas', 'upload']" [fixedWidth]="true" />
-        Upload
-      </div>
-      <div *ngIf="channelId === channelData?.id"
-        class="d-flex gap-2 align-items-center c-text flex-wrap justify-content-center"
-        (click)="openConferencePopUp()"
-      >
-        <!-- ngbTooltip="Coming Soon!"
-        placement="bottom" -->
-        <fa-icon [icon]="['fas', 'plus-square']" [fixedWidth]="true" />
-        Conference
-        <span class="d-none d-xl-block">& Record</span>
-      </div>
+      <ng-container *ngIf="channelList.length >= 0">
+        <div
+          class="d-block d-flex flex-column flex-sm-row gap-2 align-items-center c-text flex-wrap justify-content-center"
+          (click)="openVideoUploadPopUp()"
+        >
+          <fa-icon [icon]="['fas', 'upload']" [fixedWidth]="true" />
+          Upload
+        </div>
+        <div
+          class="d-flex flex-column flex-sm-row gap-2 align-items-center c-text flex-wrap justify-content-center"
+          (click)="openConferencePopUp()"
+        >
+          <!-- ngbTooltip="Coming Soon!"
+          placement="bottom" -->
+          <fa-icon [icon]="['fas', 'plus-square']" [fixedWidth]="true" />
+          Conference
+          <span class="d-none d-xl-block">& Record</span>
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>
