@@ -82,7 +82,7 @@ export function app(): express.Express {
           description:
             'The Umbrella platform for All freedom based projects worldwide',
           image:
-            'https://video.translate.tube/assets/banner/translate-Tube-Logo.jpg',
+            'https://translate.tube/assets/images/landingpage/TranslateTube-Banner.jpg',
           site: 'https://video.translate.tube/',
           url: 'https://video.translate.tube' + params,
           keywords: 'TranslateTube',
