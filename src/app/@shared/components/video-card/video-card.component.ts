@@ -53,7 +53,7 @@ export class VideoCardComponent implements OnInit, AfterViewInit {
       autostart: false,
       volume: 90,
       height: '220px',
-      width: '390px',
+      width: 'auto',
       playbackRateControls: false,
       preload: 'metadata',
     });
