@@ -22,3 +22,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+::ng-deep .time {
+  fa-icon svg path {
+    fill: #fff;
+  }
+}

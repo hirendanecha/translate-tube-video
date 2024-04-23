@@ -69,6 +69,7 @@ export class VideoComponent implements OnInit, OnChanges {
   // webUrl = environment.webUrl;
   hasMoreData = false;
   activePage: number;
+  isTheaterModeOn: boolean = false;
   commentMessageTags = [];
   commentMessageInputValue: string = '';
   constructor(
@@ -195,24 +196,24 @@ export class VideoComponent implements OnInit, OnChanges {
       if (this.player) {
         this.player.remove();
       }
-      // console.log('enter', id);
       const isPhone = window.innerWidth <= 768;
       const config = {
         file: this.videoDetails?.streamname,
         image: this.videoDetails?.thumbfilename,
         mute: false,
         autostart: false,
-        volume: 30,
+        volume: 50,
         height: isPhone ? '270px' : '660px',
-        // height: '640px',
         width: 'auto',
         pipIcon: 'disabled',
-        playbackRateControls: false,
         preload: 'metadata',
         aspectratio: '16:9',
         autoPause: {
-          viewability: true,
+          viewability: false,
         },
+        playbackRateControls: true,
+        playbackRates: [0.25, 0.50, , 0.75, 1, 1.25, 1.75, 2],
+        controls: true,
         events: {
           onError: function (e: any) {
             console.log(e);
@@ -223,11 +224,21 @@ export class VideoComponent implements OnInit, OnChanges {
       this.player = jwplayer('jwVideo-' + id).setup({
         ...config,
       });
+      const isPhoneView = window.innerWidth <= 768;
+      if (!isPhoneView) {    
+        const buttonId = 'theater-mode-button';
+        const iconPath = 'assets/img/theater-mode.png';
+        const tooltipText = 'Theater Mode';
+        jwplayer('jwVideo-' + id).addButton(iconPath, tooltipText, this.buttonClickAction.bind(this), buttonId);
+      }
       this.player.load();
       console.log('>>>>>', this.player);
-
+  
       if (this.player) clearInterval(i);
     }, 1000);
+  }
+  buttonClickAction() {
+    this.isTheaterModeOn = !this.isTheaterModeOn
   }
 
   onPostFileSelect(event: any, type: string): void {
