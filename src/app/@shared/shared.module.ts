@@ -25,6 +25,8 @@ import { ConferenceLinkComponent } from './modals/create-conference-link/confere
 import { CopyClipboardDirective } from './directives/copy-clipboard.directive';
 import { PostMetaDataCardComponent } from './components/post-meta-data-card/post-meta-data-card.component';
 import { MentionModule } from 'angular-mentions';
+import { RePostCardComponent } from './modals/re-post-card/re-post-card.component';
+import { SharePostModalComponent } from './modals/share-post-modal/share-post-modal.component';
 
 const sharedComponents = [
   ConfirmationModalComponent,
@@ -40,7 +42,9 @@ const sharedComponents = [
   CreateChannelComponent,
   ConferenceLinkComponent,
   CopyClipboardDirective,
-  PostMetaDataCardComponent
+  PostMetaDataCardComponent,
+  RePostCardComponent,
+  SharePostModalComponent
 ];
 
 const sharedModules = [

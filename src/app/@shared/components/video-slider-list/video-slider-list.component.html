@@ -1,8 +1,9 @@
 <ng-container *ngFor="let video of videoList">
-  <div
+  <a
     class="video-card video-card-list cursor"
-    (click)="openDetailPage(video)"
-  >
+    [routerLink]="['/video', video.id]"
+    >
+    <!-- (click)="openDetailPage(video)" -->
     <div class="video-card-image">
       <a class="play-icon">
         <fa-icon [icon]="['fas', 'play-circle']" />
@@ -15,7 +16,7 @@
           alt=""
           onerror="this.onerror=null;this.src='/assets/dummy/11.jpg';"
       /></a>
-      <div class="time">
+      <div class="time text-white">
         <fa-icon [icon]="['fas', 'clock']" [fixedWidth]="true" />
         {{ +video.videoduration | timeDurationWithSec }}
       </div>
@@ -47,5 +48,5 @@
         {{ video.postcreationdate | date | dateDay }}
       </div>
     </div>
-  </div>
+  </a>
 </ng-container>

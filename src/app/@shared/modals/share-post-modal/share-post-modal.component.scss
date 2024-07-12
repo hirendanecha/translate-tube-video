@@ -1,0 +1,11 @@
+:host {
+  // padding: 10px;
+  h5 {
+    text-transform: none;
+  }
+
+  ::ng-deep .tag-input-div {
+    max-width: 415px !important;
+    min-height: unset !important;
+  }
+}

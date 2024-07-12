@@ -1,0 +1,72 @@
+<div class="mt-2 border rounded">
+  <ng-container *ngIf="post; else noPost">
+    <div class="d-flex p-2" (click)="redirectToParentProfile(post)">
+      <img
+        class="w-24-px h-24-px rounded"
+        loading="lazy"
+        data-src="{{ post?.profile_pic_name }}"
+        onerror="this.onerror=null;this.src='/assets/images/avtar/placeholder-user.png';"
+        alt="avatar"
+      />
+      <div
+        class="d-flex flex-column h6 m-0 ms-2"
+        *ngIf="post?.Username || post?.firstname"
+      >
+        <div
+          class="d-flex align-items-center cursor c-padding posted-wrap-text"
+        >
+          <div class="d-flex align-items-center">
+            {{ post?.Username || post?.firstname }}
+            <div>
+              <fa-icon
+                class="ms-2 me-1 font-12-px cursor"
+                [icon]="['fas', 'clock']"
+                placement="bottom"
+              />
+              {{ post?.postcreationdate | dateDay }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-2">
+      <p
+        class="post-description mdtxt m-0"
+        [innerHTML]="post.postdescription | noSanitize"
+      ></p>
+      <ng-container *ngIf="descriptionimageUrl">
+        <app-img-preview [src]="descriptionimageUrl" classes="w-100" />
+      </ng-container>
+      <ng-container *ngIf="post?.pdfUrl">
+        <div class="d-flex align-items-center">
+          <fa-icon
+            [icon]="['fas', 'file-pdf']"
+            class="c-pointer close-icon font-60-px"
+          />
+          <span class="pdf-name c-pointer">
+            {{ post.pdfUrl.split("/")[3].replaceAll("%", " ") }}
+          </span>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="post?.streamname">
+        <video
+          [src]="post?.streamname"
+          controls
+          class="w-100 mt-1 rounded video-post"
+          [autoplay]="false"
+        ></video>
+      </ng-container>
+
+      <app-post-meta-data-card [post]="post" />
+
+      <ng-container *ngIf="post?.imageUrl">
+        <app-img-preview [src]="post?.imageUrl" classes="w-100" />
+      </ng-container>
+    </div>
+  </ng-container>
+  <ng-template #noPost>
+    <div class="d-flex justify-content-center p-2">
+      <span>This post is unavailable!</span>
+    </div>
+  </ng-template>
+</div>

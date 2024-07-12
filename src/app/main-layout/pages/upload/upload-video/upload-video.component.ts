@@ -38,7 +38,7 @@ export class UploadVideoComponent {
     private router: Router
   ) {
     const userData = JSON.parse(this.authService.getUserData() as any)
-    this.postData.profileid = userData.Id
+    this.postData.profileid = userData.profileId
     if (history.state.data) {
       this.uploadVideoData = { ...history.state.data };
       this.videoSize = this.uploadVideoData?.file?.size / 1024 / 1024;

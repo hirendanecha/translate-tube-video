@@ -5,11 +5,13 @@ import {
   AfterViewInit,
   Output,
   EventEmitter,
+  NgZone,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { VideoPostModalComponent } from '../../modals/video-post-modal/video-post-modal.component';
 import { AuthService } from '../../services/auth.service';
+import { CommonService } from '../../services/common.service';
 declare var Clappr: any;
 declare var jwplayer: any;
 
@@ -22,14 +24,20 @@ export class VideoCardComponent implements OnInit, AfterViewInit {
   isPlay = false;
   postId!: number | null;
   profileid: number;
+  includedChannels: any = [];
+  advertisementDataList: any = [];
+  isInnerWidthSmall: boolean;
+  currentPlayingVideo: any = null;
 
   @Input('videoData') videoData: any = [];
   constructor(
     private router: Router,
     public modalService: NgbModal,
-    public authService: AuthService
+    public authService: AuthService,
+    public commonService: CommonService,
+    private ngZone: NgZone,
   ) {
-    this.profileid = JSON.parse(this.authService.getUserData() as any)?.Id;
+    this.profileid = JSON.parse(this.authService.getUserData() as any)?.profileId;
     // console.log(this.profileid);
   }
 
@@ -39,24 +47,49 @@ export class VideoCardComponent implements OnInit, AfterViewInit {
         window.scrollTo(0, 0);
       }
     });
+    this.isInnerWidthSmall = window.innerWidth < 576;
+    this.ngZone.runOutsideAngular(() => {
+      window.addEventListener('resize', this.onResize.bind(this));
+    });
+    if (this.isInnerWidthSmall) {
+      this.getadvertizements();
+    }
+  }
+
+  onResize() {
+    this.ngZone.run(() => {
+      this.isInnerWidthSmall = window.innerWidth < 576;
+    });
+  }
+
+  isIncluded(channelId: number): boolean {
+    return this.includedChannels?.includes(channelId);
   }
 
   ngAfterViewInit(): void {}
 
   playvideo(video: any): void {
+    if (this.currentPlayingVideo) {
+      const currentPlayer = jwplayer('jwVideo-' + this.currentPlayingVideo.id);
+      currentPlayer.pause(true);
+    }
     this.isPlay = false;
     const player = jwplayer('jwVideo-' + video.id);
     player.setup({
       file: video.streamname,
       image: video?.thumbfilename,
-      mute: true,
+      mute: false,
       autostart: false,
       volume: 90,
       height: '220px',
       width: 'auto',
       playbackRateControls: false,
       preload: 'metadata',
+      autoPause: {
+        viewability: false,
+      },
     });
+
     player.load();
     this.playVideoByID(video.id);
   }
@@ -81,6 +114,10 @@ export class VideoCardComponent implements OnInit, AfterViewInit {
     div.innerHTML = html;
     return div.innerText;
   }
+  
+  redirectToPlayer(id){
+    window.open(`/video/${id}`, '_blank');
+  }
 
   videoEdit(video: any): void {
     // console.log(video);
@@ -100,4 +137,14 @@ export class VideoCardComponent implements OnInit, AfterViewInit {
       }
     });
   }
+  getadvertizements(): void {
+    this.commonService.getAdvertisement().subscribe({
+      next: (res: any) => {
+        this.advertisementDataList = res;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  } 
 }

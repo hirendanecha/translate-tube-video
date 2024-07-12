@@ -40,6 +40,9 @@ export class LfDashboardComponent implements OnInit {
   channelId: any;
   channelData: any = {};
   channelList: any = [];
+  mediaApproved: boolean;
+  userId: number;
+  advertisementDataList: any = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -83,8 +86,13 @@ export class LfDashboardComponent implements OnInit {
     if (!this.channelId) {
       this.channelId = +localStorage.getItem('channelId');
     }
-    this.getChannels();
-
+    if (this.userId) {
+      this.getChannels();
+    }
+    this.shareService.mediaApproved$.subscribe(value => {
+      this.mediaApproved = value;
+    });
+    this.getadvertizements();
   }
 
   getChannelDetails(value): void {
@@ -118,24 +126,55 @@ export class LfDashboardComponent implements OnInit {
   }
 
   isUserMediaApproved(): boolean {
-    return this.shareService.userDetails.MediaApproved === 1;
-    // return this.useDetails?.MediaApproved === 1;
+  return this.shareService.userDetails.MediaApproved === 1;
+  // return this.useDetails?.MediaApproved === 1;
   }
 
+  // openVideoUploadPopUp(): void {
+  //   const modalRef = this.modalService.open(VideoPostModalComponent, {
+  //     centered: true,
+  //     size: 'lg',
+  //   });
+  //   modalRef.componentInstance.title = `Upload Video`;
+  //   modalRef.componentInstance.confirmButtonLabel = 'Upload Video';
+  //   modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+  //   modalRef.componentInstance.channelList = this.channelList;
+  //   modalRef.result.then((res) => {
+  //     if (res === 'success') {
+  //       window.location.reload();
+  //     }
+  //     // console.log(res);
+  //   });
+  // }
   openVideoUploadPopUp(): void {
-    const modalRef = this.modalService.open(VideoPostModalComponent, {
-      centered: true,
-      size: 'lg',
-    });
-    modalRef.componentInstance.title = `Upload Video`;
-    modalRef.componentInstance.confirmButtonLabel = 'Upload Video';
-    modalRef.componentInstance.cancelButtonLabel = 'Cancel';
-    modalRef.componentInstance.channelList = this.channelList;
-
-    modalRef.result.then((res) => {
-      window.location.reload();
-      // console.log(res);
-    });
+    const openModal = () => {
+      const modalRef = this.modalService.open(VideoPostModalComponent, {
+        centered: true,
+        size: 'lg',
+      });
+      modalRef.componentInstance.title = `Upload Video`;
+      modalRef.componentInstance.confirmButtonLabel = 'Upload Video';
+      modalRef.componentInstance.cancelButtonLabel = 'Cancel';
+      modalRef.componentInstance.channelList = this.channelList;
+      modalRef.result.then((res) => {
+        if (res === 'success') {
+          window.location.reload();
+        }
+      });
+    };
+  
+    if (!this.channelList || !this.channelList.length) {
+      this.userId = JSON.parse(this.authService.getUserData() as any)?.Id;
+      const apiUrl = `${environment.apiUrl}channels/get-channels/${this.userId}`;
+      this.commonService.get(apiUrl).subscribe(
+        (res) => {
+          this.channelList = res.data;
+          openModal();
+        }
+      )
+    } else {
+      openModal();
+    }
   }
 
   createChannel(): void {
@@ -167,14 +206,26 @@ export class LfDashboardComponent implements OnInit {
   }
 
   getChannels(): void {
-    const userId = JSON.parse(this.authService.getUserData() as any)?.UserID;
-    const apiUrl = `${environment.apiUrl}channels/get-channels/${userId}`;
+    this.userId = JSON.parse(this.authService.getUserData() as any)?.Id;
+    const apiUrl = `${environment.apiUrl}channels/get-channels/${this.userId}`;
     this.commonService.get(apiUrl).subscribe({
       next: (res) => {
         this.channelList = res.data;
-        console.log(this.channelList);
+        let channelIds = this.channelList.map(e => e.id);
+        localStorage.setItem('get-channels', JSON.stringify(channelIds));
+        // console.log(this.channelList);
       },
       error(err) {
+        console.log(err);
+      },
+    });
+  }
+  getadvertizements(): void {
+    this.commonService.getAdvertisement().subscribe({
+      next: (res: any) => {
+        this.advertisementDataList = res;
+      },
+      error: (err) => {
         console.log(err);
       },
     });

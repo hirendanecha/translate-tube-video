@@ -1,0 +1,53 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .post-description {
+    max-width: 630px;
+    // line-break: anywhere;
+    .post-img {
+      max-width: 630px;
+    }
+  }
+  .post-meta-description {
+    line-break: anywhere;
+  }
+  .video-post {
+    max-height: 300px;
+  }
+  ::ng-deep {
+    .post-description {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      span,
+      b,
+      em,
+      div,
+      strong,
+      li {
+        font-size: 16px !important;
+        line-height: 22px !important;
+        margin: unset !important;
+        letter-spacing: unset !important;
+        background-color: unset !important;
+        font-weight: 500 !important;
+        color: unset !important;
+      }
+      a {
+        font-size: 16px !important;
+        line-height: 22px !important;
+        margin: unset !important;
+        background-color: unset !important;
+        font-weight: 500 !important;
+      }
+      img,
+      svg {
+        display: none !important;
+      }
+    }
+  }
+}

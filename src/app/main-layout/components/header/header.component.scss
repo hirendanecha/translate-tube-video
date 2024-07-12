@@ -53,3 +53,9 @@
     font-size: 16px;
   }
 }
+.nav-logo{
+  display: flex;
+  @media(max-width:576px){
+    flex-direction: row-reverse;;
+  }
+}

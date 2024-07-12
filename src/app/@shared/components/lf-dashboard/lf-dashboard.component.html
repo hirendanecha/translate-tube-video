@@ -2,6 +2,33 @@
   class="jumbotron dash-container mb-0 mx-sm-4 pt-4 videos-section pb-4 rounded mb-4 shadow"
 >
   <div>
+    <ng-container *ngIf="advertisementDataList.length; else localAdvertisement">
+      <!-- <div class="d-flex justify-content-center gap-2 token-img-modal token-hide-mb">
+      <ng-container *ngFor="let item of advertisementDataList | slice:0:4">
+          <div>
+            <img
+              loading="lazy"
+              [src]="item.imageUrl"
+              class="advertise-image h-100 w-100"
+              alt=""
+            />
+          </div>
+        </ng-container>
+      </div> -->
+      <div class="d-flex flex-wrap justify-content-center gap-2 token-img-modal token-hide-mb">
+        <ng-container *ngFor="let ad of advertisementDataList | slice:0:4">
+          <a class="advertise-image-container" [attr.href]="ad.link ? ad.link : null" [attr.target]="ad.link ? '_blank' : null">
+            <img
+              loading="lazy"
+              [src]="ad.imageUrl"
+              class="advertise-image h-100 w-100 rounded-2"
+              alt=""
+            />
+          </a>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-template #localAdvertisement>
     <div class="col-12 col-md-12 col-lg-8 m-auto token-img-modal token-hide-mb">
       <img
         loading="lazy"
@@ -10,6 +37,7 @@
         alt=""
       />
     </div>
+  </ng-template >
     <div
       class="d-xl-flex column-gap-2 column-gap-xxl-4 col-12 col-md-12 col-lg-8 m-auto px-4 mt-4 justify-content-center mb-view-left-txt c-searchbar"
     >
@@ -79,7 +107,7 @@
       </div>
     </ng-container>
     <div
-      *ngIf="isUserMediaApproved() && channelList.length"
+      *ngIf="mediaApproved && channelId"
       class="d-flex c-bg-color py-2 justify-content-evenly justify-content-md-center column-gap-2 column-gap-xxl-4 col-12 col-md-12 col-lg-8 m-auto mt-4 my-xxl-4 justify-content-center mb-view-left-txt"
     >
       <!-- routerLink="/channels" -->
@@ -94,6 +122,7 @@
       <div ngbDropdown class="d-flex flex-column flex-sm-row align-items-center gap-2 d-inline-block btn-group float-end right-action">
         <fa-icon [icon]="['fas', 'user']" [fixedWidth]="true" />
         <a
+          (click)="!channelList.length ? getChannels() : null"
           class="d-block d-md-flex gap-2 align-items-center c-text flex-wrap justify-content-center"
           id="userDropdown"
           role="button"

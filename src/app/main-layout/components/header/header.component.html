@@ -1,8 +1,8 @@
 <nav
-  class="navbar navbar-expand navbar-light bg-white osahan-nav fixed-top justify-content-between"
+  class="navbar navbar-expand navbar-light bg-white osahan-nav fixed-top justify-content-between gap-3"
 >
   <ng-container *ngIf="shareService.getCredentials(); else noCredentials">
-    <div>
+    <div class="nav-logo">
       <button
         class="btn btn-link btn-sm text-secondary order-1 order-sm-0 ms-1"
         (click)="toggleSidebar()"
@@ -17,14 +17,14 @@
       /></a>
     </div>
     <ul
-      class="navbar-nav d-none d-sm-flex flex-row justify-content-around align-self-center ms-auto m-lg-auto gap-3 gap-xl-20 gap-lg-10 py-0 nav-btn"
+      class="navbar-nav d-sm-flex flex-row justify-content-around align-self-center ms-auto m-lg-auto gap-3 gap-xl-20 gap-lg-10 py-0 nav-btn"
     >
       <li title="Translate Home" class="cursor">
         <a href="https://translate.tube/home" target="_blank">
           <fa-icon [icon]="['fas', 'house']" class="font-24-px" />
         </a>
       </li>
-      <li title="Translate Research" class="cursor">
+      <li title="Translate Research" class="cursor d-none d-sm-flex">
         <a href="https://translate.tube/research" target="_blank">
           <fa-icon [icon]="['fas', 'book-open']" class="font-24-px mx-sm-5" />
         </a>
@@ -36,7 +36,7 @@
       </li>
     </ul>
     <!-- Navbar -->
-    <ul class="navbar-nav ms-auto ms-md-0 osahan-right-navbar">
+    <ul class="navbar-nav ms-auto ms-md-0 osahan-right-navbar align-items-center">
       <div class="single-item">
         <div
           class="icon-area d-center position-relative"
@@ -101,14 +101,14 @@
             <fa-icon [icon]="['fas', 'video']" [fixedWidth]="true" />
             &nbsp; Subscriptions
           </button> -->
-            <!-- <button ngbDropdownItem routerLink="/settings">
+            <button ngbDropdownItem routerLink="/settings">
               <fa-icon
                 class="font-20-px"
                 [icon]="['fas', 'cog']"
                 [fixedWidth]="true"
               />
               &nbsp; Settings
-            </button> -->
+            </button>
             <button ngbDropdownItem>
               <div class="d-flex gap-1 align-items-center">
                 <fa-icon

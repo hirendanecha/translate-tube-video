@@ -79,10 +79,26 @@
                     {{ videoDetails?.viewcount }} views
                   </p> -->
                 </div>
+                <div class="d-flex gap-1 gap-sm-3" *ngIf="sharedService.getCredentials()">
+                  <!-- <div
+                    class="d-flex align-items-center gap-1 cursor"
+                    (click)="
+                      videoDetails.react === 'L'
+                        ? dislikeFeedPost(videoDetails)
+                        : reactLikeOnPost(videoDetails)
+                    "
+                  >
+                    <fa-icon
+                      [icon]="['fas', 'thumbs-up']"
+                      [fixedWidth]="true"
+                    />
+                    <span class="me-1 font-20-px">{{
+                      videoDetails.likescount || 0
+                    }}</span>
+                  </div> -->
                 <div
                   class="d-flex align-items-center cursor"
-                  ngbTooltip="Coming Soon!"
-                  placement="bottom"
+                  (click)="shareOnNF(videoDetails)"
                 >
                   <span class="me-1 font-20-px">Share</span>
                   <fa-icon [icon]="['fas', 'share-alt']" [fixedWidth]="true" />
@@ -90,7 +106,7 @@
               </div>
             </div>
             <div
-              class="single-video-author box mb-3"
+            class="single-video-author box mb-3 cursor flex-column flex-sm-row justify-content-between align-items-center"
               *ngIf="videoDetails?.unique_link"
             >
               <img
@@ -101,7 +117,7 @@
                 alt=""
               />
               <p class="d-flex align-items-center">
-                <a
+                <a  [href]="'channel/' + videoDetails?.unique_link"
                   ><strong class="header-text me-2">{{
                     videoDetails.firstname
                   }}</strong></a
@@ -119,6 +135,14 @@
                 >Published on
                 {{ videoDetails?.created | date : "MMM dd,yyyy" }}</small
               >
+            </div>
+            <!-- <ng-container *ngIf="videoDetails?.profileid !== profileId && sharedService.getCredentials()">
+              <div class="d-flex align-items-center form-inline my-2 my-lg-0">
+                <button class="btn btn-sm" [ngClass]="!videoDetails?.isSubscribed ? 'btn-success' : 'btn-danger'" (click)="channelSubscribe(videoDetails?.isSubscribed)">
+                  {{ !videoDetails?.isSubscribed ? 'Subscribe' : 'Unsubscribe'}}
+                </button>
+              </div>
+            </ng-container> -->
             </div>
             <div class="single-video-info-content box mb-3">
               <!-- <h6>Cast:</h6>
@@ -298,7 +322,7 @@
                             class="reviews-members-footer d-flex align-items-center"
                           >
                             <button
-                              class="total-like me-2 cursor"
+                              class="total-like me-2 cursor  btn btn-outline-primary"
                               (click)="
                                 comment.react == 'L'
                                   ? disLikeComments(comment)
@@ -315,7 +339,7 @@
                               }}&nbsp;Likes
                             </button>
                             <button
-                              class="total-like cursor"
+                              class="total-like cursor  btn btn-outline-primary"
                               [disabled]="!sharedService.getCredentials()"
                               (click)="showReplySection(comment?.id)"
                             >
@@ -459,7 +483,7 @@
                                     <div class="reviews-members-footer">
                                       <!-- <a class="total-like" -->
                                       <button
-                                        class="total-like text-primary cursor"
+                                        class="total-like text-primary cursor  btn btn-outline-primary"
                                         [disabled]="
                                           !sharedService.getCredentials()
                                         "
@@ -543,7 +567,7 @@
         </div>
         <ng-template #noCredentials>
           <div
-            class="right-sidebar profile-sidebar cus-scrollbar d-flex flex-column w-400-px shadow"
+          class="right-sidebar profile-sidebar cus-scrollbar d-flex flex-column d-none d-lg-flex shadow"
           >
             <div class="dashboard-img mb-5 mt-2">
               <img
@@ -556,10 +580,10 @@
               </span>
             </div>
             <div class="w-100 d-grid">
-              <a href="https://www.healing.tube/login">
+              <a href="https://www.translate.tube/login">
                 <button class="btn btn-success w-100 mb-2">Login</button>
               </a>
-              <a href="https://www.healing.tube/register">
+              <a href="https://www.translate.tube/register">
                 <button class="btn btn-primary w-100">Sign up</button>
               </a>
             </div>

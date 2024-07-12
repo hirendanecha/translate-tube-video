@@ -13,15 +13,65 @@
       </div>
       <app-video-card [videoData]="videoList" />
       <div
-        class="d-flex justify-content-center mb-2"
+        class="align-items-center justify-content-center mb-2 row"
         *ngIf="!hasMoreData && videoList.length"
       >
-        <button class="btn btn-outline-primary" (click)="loadMore()">
+      <div class="add-left d-flex gap-5 col-lg-5">
+        <div class="d-flex m-auto gap-3 gap-xxl-4">
+      <ng-container *ngIf="advertisementDataList?.[0]?.imageUrl">
+        <a class="advertise-image-container d-none d-sm-flex" [attr.href]="advertisementDataList?.[0]?.link ? advertisementDataList?.[0]?.link : null" [attr.target]="advertisementDataList?.[0]?.link ? '_blank' : null">
+          <img
+            loading="lazy"
+            [src]="advertisementDataList?.[0]?.imageUrl"
+            class="advertise-image h-100 w-100 rounded-2"
+            alt=""
+          />
+        </a>
+      </ng-container>
+      <ng-container *ngIf="advertisementDataList?.[2]?.imageUrl">
+        <a class="advertise-image-container d-none d-sm-flex" [attr.href]="advertisementDataList?.[2]?.link ? advertisementDataList?.[2]?.link : null" [attr.target]="advertisementDataList?.[2]?.link ? '_blank' : null">
+          <img
+            loading="lazy"
+            [src]="advertisementDataList?.[2]?.imageUrl"
+            class="advertise-image h-100 w-100 rounded-2"
+            alt=""
+          />
+        </a>
+      </ng-container>
+    </div>
+    </div>
+      <div class="col-lg-2 m-sm-4 m-lg-0">
+        <button class="btn btn-outline-primary d-block m-auto" (click)="loadMore()">
           Load More
         </button>
       </div>
+      <div class="add-right d-flex gap-5 col-lg-5">
+        <div class="d-flex m-auto gap-3 gap-xxl-4">
+        <ng-container *ngIf="advertisementDataList?.[1]?.imageUrl">
+          <a class="advertise-image-container d-none d-sm-flex" [attr.href]="advertisementDataList?.[1]?.link ? advertisementDataList?.[1]?.link : null" [attr.target]="advertisementDataList?.[1]?.link ? '_blank' : null">
+            <img
+              loading="lazy"
+              [src]="advertisementDataList[1]?.imageUrl"
+              class="advertise-image h-100 w-100 rounded-2"
+              alt=""
+            />
+          </a>
+        </ng-container>
+        <ng-container *ngIf="advertisementDataList?.[3]?.imageUrl">
+          <a class="advertise-image-container d-none d-sm-flex" [attr.href]="advertisementDataList?.[3]?.link ? advertisementDataList?.[3]?.link : null" [attr.target]="advertisementDataList?.[3]?.link ? '_blank' : null">
+            <img
+              loading="lazy"
+              [src]="advertisementDataList[3]?.imageUrl"
+              class="advertise-image h-100 w-100 rounded-2"
+              alt=""
+            />
+          </a>
+        </ng-container>
+      </div>
+      </div>
+      </div>
     </ng-container>
-  </div>
+</div>
 </div>
 <ng-container *ngIf="!searchResults">
   <div class="video-block section-padding">
@@ -65,7 +115,7 @@
       <div class="d-flex justify-content-between">
         <div class="mb-5">
           <h6>About {{ searchResults }} results</h6>
-          <h4>Search result for {{ activeTab }}</h4>
+          <h4>Search result for {{searchText}}</h4>
         </div>
         <fa-icon
         [icon]="['fas', 'xmark']"

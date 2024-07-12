@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/@shared/services/auth.service';
 import { CommonService } from 'src/app/@shared/services/common.service';
+import { SeoService } from 'src/app/@shared/services/seo.service';
+// import { SeoService } from 'src/app/@shared/services/seo.service';
 import { ShareService } from 'src/app/@shared/services/share.service';
 import { SocketService } from 'src/app/@shared/services/socket.service';
 import { environment } from 'src/environments/environment';
@@ -27,20 +29,24 @@ export class HomeComponent implements OnInit, AfterViewInit {
   userId: number;
   channelId: number;
   receivedSearchText: string = '';
-  activeTab: string = 'Channels';
+  activeTab: string = 'Videos';
   searchChannelData: any = [];
   searchPostData: any = [];
   searchResults: number;
 
   notificationId: number;
+  searchText: string;
+  advertisementDataList: any = [];
 
   constructor(
+
     private route: ActivatedRoute,
     private commonService: CommonService,
     private spinner: NgxSpinnerService,
     private socketService: SocketService,
     private authService: AuthService,
-    private shareService: ShareService
+    private shareService: ShareService,
+    private seoService: SeoService,
   ) {
     this.profileId = JSON.parse(this.authService.getUserData() as any)?.Id;
     this.userId = JSON.parse(this.authService.getUserData() as any)?.UserID;
@@ -63,10 +69,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.getChannelByUserId(this.userId);
       }
     });
+    const data = {
+      title: `Translate.Tube`,
+      description: '',
+    };
+    this.seoService.updateSeoMetaData(data);
   }
 
   ngOnInit() {
     this.recommendedLoadMore();
+    this.getadvertizements();
   }
 
   ngAfterViewInit(): void {
@@ -107,6 +119,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.channelData = res[0];
           // localStorage.setItem('channelId', this.channelData.id);
           // console.log(this.channelData);
+          const data = {
+            title: `Translatetube ${this.channelData?.firstname}`,
+            url: `${location.href}`,
+            description: '',
+          };
+          this.seoService.updateSeoMetaData(data);
           this.getPostVideosById();
         }
       },
@@ -122,6 +140,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
         // console.log(res.data);
         if (res.data.length) {
           this.channelData = res.data[0];
+          const data = {
+            title: `Translatetube ${this.channelData.firstname}`,
+            url: `${location.href}`,
+            description: '',
+          };
+          this.seoService.updateSeoMetaData(data);
           // console.log(this.channelData);
           this.getPostVideosById();
         }
@@ -212,6 +236,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   onSearchData(searchText: string) {
+    console.log(searchText);
+    this.searchText = searchText;
+
+
+
     this.spinner.show();
     this.commonService
       .post(`${this.apiUrl}search-all`, { search: searchText })
@@ -238,5 +267,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.searchChannelData = null;
     this.searchPostData = null;
     this.searchResults = null;
+  }
+  getadvertizements(): void {
+    this.commonService.getAdvertisement().subscribe({
+      next: (res: any) => {
+        this.advertisementDataList = res;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

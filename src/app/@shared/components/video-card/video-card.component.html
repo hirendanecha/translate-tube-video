@@ -72,6 +72,16 @@
           </div>
         </div>
       </div>
+      <ng-container *ngFor="let ad of advertisementDataList | randomAdvertisementUrl: i">
+        <a class="img-preview rounded-3 w-100 mt-3" [attr.href]="ad.link ? ad.link : null" [attr.target]="ad.link ? '_blank' : null">
+          <img
+            loading="lazy"
+            [src]="ad.imageUrl"
+            class="w-100 h-100 rounded-3 image-render advertise-image"
+            alt="advertisement"
+          />
+        </a>
+      </ng-container>
     </div>
   </ng-container>
   <ng-container *ngIf="!videoData.length">
