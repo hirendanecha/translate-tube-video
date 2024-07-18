@@ -17,6 +17,6 @@ export const environment = {
   apiUrl: `${backendUrl}api/v1/`,
   domain: '.translate.tube',
   socketUrl: `${backendUrl}`,
-  conferenceUrl: 'https://facetime.tube/',
+  conferenceUrl: 'https://meet.facetime.tube/',
   logoutUrl: logoutUrl
 };
