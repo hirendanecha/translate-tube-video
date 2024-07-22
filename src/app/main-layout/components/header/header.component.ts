@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit {
   }
 
   myAccountNavigation(): void {
-    const id = this.shareService.userDetails.Id
+    const id = this.shareService.userDetails.profileId
     // location.href = `https://freedom.buzz/settings/view-profile/${id}`;
     const url = `https://translate.tube/settings/view-profile/${id}`;
     window.open(url, "_blank");
